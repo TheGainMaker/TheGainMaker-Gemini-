@@ -158,37 +158,18 @@
     <script type="module">
     // --- 1. FOUNDATION DATA ---
     const foundation = [
-        { cat: 'health', title: 'The Zone 2 Protocol', desc: 'Why low-intensity cardio is the secret to cellular longevity.', img: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'health', title: 'Sleep Hygiene Mastery', desc: 'Advanced techniques for reaching 90%+ sleep efficiency.', img: 'https://images.unsplash.com/photo-1541480601022-2308c0f02487?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'health', title: 'The VO2 Max Lever', desc: 'Predicting lifespan through aerobic capacity.', img: 'https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'health', title: 'Microbiome Optimization', desc: 'A gut-first approach to mental clarity.', img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'health', title: 'Cold Exposure Logic', desc: 'Brown fat activation and dopamine baseline resets.', img: 'https://images.unsplash.com/photo-1517344834466-7f05d27b3338?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'health', title: 'Hydration Precision', desc: 'Moving beyond "8 glasses a day" to electrolyte balance.', img: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'health', title: 'Blue Light Mitigation', desc: 'Protecting your circadian rhythm in a digital world.', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'health', title: 'Resistance Training for Ages', desc: 'Maintaining muscle mass as a metabolic sink.', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'health', title: 'The Fasting Window', desc: 'Autophagy and metabolic flexibility protocols.', img: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'health', title: 'Mobility as Currency', desc: 'Ensuring your body can move as well as your mind.', img: 'https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'money', title: 'Index Fund Efficiency', desc: 'The tax-advantaged path to a $5M portfolio.', img: 'https://images.unsplash.com/photo-1611974714024-460777dc5941?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'money', title: 'HSA: The Ultimate Loophole', desc: 'Using health accounts as hidden retirement vehicles.', img: 'https://images.unsplash.com/photo-1573164773711-331694d765d4?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'money', title: 'Real Estate Tokenization', desc: 'The future of fractional asset ownership.', img: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'money', title: 'Side-Hustle Automation', desc: 'Building digital assets that pay while you sleep.', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'money', title: 'Bitcoin as Gold 2.0', desc: 'A risk-mitigated approach to sovereign wealth.', img: 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'money', title: 'Tax Loss Harvesting', desc: 'The pro way to turn market red into tax credits.', img: 'https://images.unsplash.com/photo-1554224155-1696413565d3?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'money', title: 'The High-Yield Ladder', desc: 'Optimizing cash flow in a 5% world.', img: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'money', title: 'Withdrawal Rate Realities', desc: 'Navigating the 4% rule with current inflation.', img: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'money', title: 'Venture Capital Basics', desc: 'How to angel invest without a finance degree.', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'money', title: 'Offshore Arbitrage', desc: 'Lowering your burn rate by becoming a global citizen.', img: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'books', title: 'Deep Work', desc: 'By Cal Newport - Mastering focus in a noisy world.', img: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'books', title: 'Atomic Habits', desc: 'By James Clear - The math of 1% improvement.', img: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'books', title: 'Psychology of Money', desc: 'By Morgan Housel - Lessons on greed and logic.', img: 'https://images.unsplash.com/photo-1541963463532-d68292c34b19?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'books', title: 'Meditations', desc: 'By Marcus Aurelius - Stoicism for high-performers.', img: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'books', title: 'Skin in the Game', desc: 'By Nassim Taleb - Hidden asymmetries in life.', img: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'books', title: 'Zero to One', desc: 'By Peter Thiel - Notes on start-ups and secrets.', img: 'https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'books', title: 'Outlive', desc: 'By Peter Attia - The science of longevity.', img: 'https://images.unsplash.com/photo-1505682634904-d7c8d95ccd50?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'books', title: 'The Alchemist', desc: 'By Paulo Coelho - Finding your personal legend.', img: 'https://images.unsplash.com/photo-1491841573634-28140fc7ced7?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'books', title: 'Tools of Titans', desc: 'By Tim Ferriss - Tactics of world-class performers.', img: 'https://images.unsplash.com/photo-1543004218-283029ee986c?auto=format&fit=crop&q=80&w=400' },
-        { cat: 'books', title: 'Man\'s Search for Meaning', desc: 'By Viktor Frankl - Finding purpose in any state.', img: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=400' }
-    ];
+      // Updated BOOKS section for your foundation array
+{ cat: 'books', title: 'Deep Work', desc: 'By Cal Newport - Mastering focus in a noisy world.', img: 'https://covers.openlibrary.org/b/id/12838575-L.jpg' },
+{ cat: 'books', title: 'Atomic Habits', desc: 'By James Clear - The math of 1% improvement.', img: 'https://covers.openlibrary.org/b/id/12845347-L.jpg' },
+{ cat: 'books', title: 'Psychology of Money', desc: 'By Morgan Housel - Lessons on greed and logic.', img: 'https://covers.openlibrary.org/b/id/10398634-L.jpg' },
+{ cat: 'books', title: 'Meditations', desc: 'By Marcus Aurelius - Stoicism for high-performers.', img: 'https://covers.openlibrary.org/b/id/12741513-L.jpg' },
+{ cat: 'books', title: 'Skin in the Game', desc: 'By Nassim Taleb - Hidden asymmetries in life.', img: 'https://covers.openlibrary.org/b/id/8301729-L.jpg' },
+{ cat: 'books', title: 'Zero to One', desc: 'By Peter Thiel - Notes on start-ups and secrets.', img: 'https://covers.openlibrary.org/b/id/12028608-L.jpg' },
+{ cat: 'books', title: 'Outlive', desc: 'By Peter Attia - The science of longevity.', img: 'https://covers.openlibrary.org/b/id/13448378-L.jpg' },
+{ cat: 'books', title: 'The Alchemist', desc: 'By Paulo Coelho - Finding your personal legend.', img: 'https://covers.openlibrary.org/b/id/12762266-L.jpg' },
+{ cat: 'books', title: 'Tools of Titans', desc: 'By Tim Ferriss - Tactics of world-class performers.', img: 'https://covers.openlibrary.org/b/id/8230712-L.jpg' },
+{ cat: 'books', title: 'Man\'s Search for Meaning', desc: 'By Viktor Frankl - Finding purpose in any state.', img: 'https://covers.openlibrary.org/b/id/12871233-L.jpg' }
+
 
     let currentTab = 'health';
     const grid = document.getElementById('content-grid');
