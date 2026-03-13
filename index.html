@@ -7,172 +7,118 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .accent-gradient { background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%); }
-        .text-gradient { background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; scroll-behavior: smooth; }
+        .glass-nav { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid #e2e8f0; }
+        .accent-gradient { background: linear-gradient(135deg, #2563eb 0%, #059669 100%); }
+        .text-gradient { background: linear-gradient(135deg, #1e40af 0%, #047857 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .tab-active { color: #2563eb; border-bottom: 2px solid #2563eb; }
+        .card-enter { animation: fadeInUp 0.6s ease forwards; opacity: 0; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Custom Notification Toast */
         #toast {
-            visibility: hidden;
-            min-width: 250px;
-            margin-left: -125px;
-            background-color: #10b981;
-            color: #fff;
-            text-align: center;
-            border-radius: 12px;
-            padding: 16px;
-            position: fixed;
-            z-index: 100;
-            left: 50%;
-            bottom: 30px;
-            font-size: 14px;
-            font-weight: 600;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            visibility: hidden; min-width: 250px; margin-left: -125px; background-color: #0f172a; color: #fff;
+            text-align: center; border-radius: 50px; padding: 12px 24px; position: fixed; z-index: 100;
+            left: 50%; bottom: 30px; font-size: 14px; font-weight: 600; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
-        #toast.show { visibility: visible; -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
-        @-webkit-keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
-        @-webkit-keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
     </style>
 </head>
-<body class="bg-[#0a0a0c] text-gray-200 selection:bg-blue-500/30">
+<body class="text-slate-800">
 
-    <div id="toast">Subscribed successfully!</div>
+    <div id="toast">Success!</div>
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 glass border-b border-white/5">
+    <nav class="fixed w-full z-50 glass-nav">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16 items-center">
-                <div class="flex items-center space-x-2">
-                    <div class="w-8 h-8 accent-gradient rounded-lg flex items-center justify-center">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center space-x-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="w-9 h-9 accent-gradient rounded-xl flex items-center justify-center shadow-lg">
                         <i class="fas fa-chart-line text-white text-sm"></i>
                     </div>
-                    <span class="text-xl font-800 tracking-tighter text-white uppercase italic">THE<span class="text-blue-500">GAIN</span>MAKER</span>
+                    <span class="text-xl font-800 tracking-tight text-slate-900 uppercase italic">THE<span class="text-blue-600">GAIN</span>MAKER</span>
                 </div>
-                <div class="hidden md:flex space-x-8 text-sm font-medium">
-                    <a href="#health" class="hover:text-blue-400 transition">Health</a>
-                    <a href="#money" class="hover:text-blue-400 transition">Money</a>
-                    <a href="#books" class="hover:text-blue-400 transition">Books</a>
-                    <a href="#calculator" class="px-4 py-2 accent-gradient rounded-full text-white hover:opacity-90 transition">Healthcare Calc</a>
+                <div class="hidden md:flex space-x-8 text-sm font-semibold text-slate-600">
+                    <a href="#content-hub" onclick="setActiveTab('health')" class="hover:text-blue-600 transition">Health</a>
+                    <a href="#content-hub" onclick="setActiveTab('money')" class="hover:text-blue-600 transition">Money</a>
+                    <a href="#content-hub" onclick="setActiveTab('books')" class="hover:text-blue-600 transition">Books</a>
+                    <a href="#calculator" class="px-5 py-2.5 bg-slate-900 text-white rounded-full hover:bg-blue-600 transition">Calculator</a>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header class="relative pt-32 pb-20 px-4 overflow-hidden">
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-500/10 via-transparent to-transparent -z-10"></div>
+    <header class="relative pt-48 pb-20 px-4 overflow-hidden bg-white">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[600px] bg-[radial-gradient(circle_at_center,_#dbeafe_0%,_transparent_70%)] opacity-30 -z-10"></div>
         <div class="max-w-5xl mx-auto text-center">
-            <h1 class="text-5xl md:text-7xl font-800 text-white mb-6 leading-tight">
-                Master Your <span class="text-gradient">Body</span>, Your <span class="text-gradient">Bank</span>, and Your <span class="text-gradient">Brain</span>.
+            <h1 class="text-5xl md:text-7xl font-800 text-slate-900 mb-8 leading-[1.1] tracking-tight">
+                Optimizing for <span class="text-gradient">Longevity</span> & <br>Financial <span class="text-gradient">Freedom</span>.
             </h1>
-            <p class="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-                The ultimate resource for high-performers seeking optimal wellness, financial freedom, and intellectual growth.
+            <p class="text-lg text-slate-500 mb-10 max-w-2xl mx-auto">
+                The Gain Maker is a research-backed repository for those who treat their health like an investment and their wealth like a science.
             </p>
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#health" class="px-8 py-4 bg-white text-black font-bold rounded-xl hover:bg-gray-200 transition">Start Growing</a>
-                <a href="#books" class="px-8 py-4 glass text-white font-bold rounded-xl hover:bg-white/5 transition">Library</a>
+            <div class="flex justify-center gap-4">
+                <a href="#content-hub" class="px-8 py-4 bg-slate-900 text-white font-bold rounded-2xl shadow-xl hover:-translate-y-1 transition">View Library</a>
+                <a href="#newsletter" class="px-8 py-4 border border-slate-200 font-bold rounded-2xl hover:bg-slate-50 transition">Join Newsletter</a>
             </div>
         </div>
     </header>
 
-    <!-- Health & Wellness Section -->
-    <section id="health" class="py-20 bg-black/40">
+    <!-- Content Hub -->
+    <section id="content-hub" class="py-20">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="flex items-center space-x-4 mb-12">
-                <h2 class="text-3xl font-bold text-white">Health & Wellness</h2>
-                <div class="h-px flex-1 bg-gradient-to-r from-blue-500/50 to-transparent"></div>
+            <!-- Tab Switcher -->
+            <div class="flex justify-center border-b border-slate-200 mb-12">
+                <div class="flex space-x-8">
+                    <button onclick="setActiveTab('health')" id="tab-health" class="pb-4 text-sm font-bold uppercase tracking-widest transition tab-active">Health & Wellness</button>
+                    <button onclick="setActiveTab('money')" id="tab-money" class="pb-4 text-sm font-bold uppercase tracking-widest transition text-slate-400">Money & Wealth</button>
+                    <button onclick="setActiveTab('books')" id="tab-books" class="pb-4 text-sm font-bold uppercase tracking-widest transition text-slate-400">The Bookshelf</button>
+                </div>
+            </div>
+
+            <!-- Grid Container -->
+            <div id="content-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Articles injected here via JS -->
             </div>
             
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="glass rounded-2xl p-6 hover:translate-y-[-5px] transition duration-300">
-                    <div class="w-full h-48 bg-gray-800 rounded-xl mb-6 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=600" alt="Fitness" class="object-cover w-full h-full opacity-60">
-                        <span class="absolute top-4 left-4 px-3 py-1 bg-blue-500 text-xs font-bold rounded-full">Fitness</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-3 text-white">Compound Micro-Workouts</h3>
-                    <p class="text-gray-400 text-sm mb-4 leading-relaxed">How 10-minute movement snacks can outperform an hour at the gym for metabolic health.</p>
-                    <a href="#" class="text-blue-400 text-sm font-bold flex items-center hover:underline">Read Post <i class="fas fa-arrow-right ml-2"></i></a>
-                </div>
-
-                <div class="glass rounded-2xl p-8 border-2 border-blue-500/20 bg-blue-500/5 col-span-1 md:col-span-2 flex flex-col md:flex-row items-center gap-8">
-                    <div class="flex-1">
-                        <h3 class="text-2xl font-bold text-white mb-4">Planning for Longevity?</h3>
-                        <p class="text-gray-400 mb-6">Healthcare is the #1 expense in retirement. Use our gain-focused calculator to estimate your future capital needs.</p>
-                        <a href="#calculator" class="inline-block px-6 py-3 accent-gradient rounded-xl font-bold text-white shadow-lg shadow-blue-500/20">Launch Calculator</a>
-                    </div>
-                    <div class="w-full md:w-64 aspect-square glass rounded-2xl flex items-center justify-center">
-                        <i class="fas fa-heartbeat text-6xl text-blue-500 animate-pulse"></i>
-                    </div>
-                </div>
+            <!-- Dynamic Sync Button (Admin Only / Hidden by default) -->
+            <div class="mt-20 text-center">
+                <button id="sync-btn" class="hidden px-6 py-2 bg-blue-50 text-blue-600 rounded-lg text-xs font-bold border border-blue-100 hover:bg-blue-100">
+                    <i class="fas fa-sync mr-2"></i> Sync Foundation to Cloud
+                </button>
             </div>
         </div>
     </section>
 
-    <!-- Money Section -->
-    <section id="money" class="py-20">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex items-center space-x-4 mb-12">
-                <div class="h-px flex-1 bg-gradient-to-l from-emerald-500/50 to-transparent"></div>
-                <h2 class="text-3xl font-bold text-white">Money & Wealth</h2>
-            </div>
-            <div class="grid md:grid-cols-4 gap-6">
-                <div class="glass p-6 rounded-2xl border-l-4 border-emerald-500">
-                    <h4 class="text-emerald-500 font-bold text-xs uppercase tracking-widest mb-2">Passive Income</h4>
-                    <p class="text-white font-semibold">5 High-Yield Assets for 2026</p>
-                </div>
-                <div class="glass p-6 rounded-2xl border-l-4 border-blue-500">
-                    <h4 class="text-blue-500 font-bold text-xs uppercase tracking-widest mb-2">Strategy</h4>
-                    <p class="text-white font-semibold">The 70/20/10 Scaling Rule</p>
-                </div>
-                <div class="glass p-6 rounded-2xl border-l-4 border-purple-500">
-                    <h4 class="text-purple-500 font-bold text-xs uppercase tracking-widest mb-2">Real Estate</h4>
-                    <p class="text-white font-semibold">Tokenized Assets vs. REITs</p>
-                </div>
-                <div class="accent-gradient p-6 rounded-2xl flex flex-col justify-between cursor-pointer hover:scale-105 transition">
-                    <p class="text-white font-bold leading-tight">Master your portfolio with our partner's tool.</p>
-                    <span class="mt-4 bg-black/20 py-2 rounded-lg text-center text-xs font-bold uppercase">Claim Bonus</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Calculator Section -->
-    <section id="calculator" class="py-24 bg-gradient-to-b from-[#0a0a0c] to-[#121216]">
-        <div class="max-w-3xl mx-auto px-4">
-            <div class="glass p-10 rounded-3xl relative overflow-hidden">
-                <div class="absolute -top-24 -right-24 w-64 h-64 accent-gradient rounded-full blur-[100px] opacity-20"></div>
-                
-                <h2 class="text-3xl font-bold text-white mb-2">Retirement Health Estimator</h2>
-                <p class="text-gray-400 mb-8">Estimate projected healthcare costs to protect your wealth.</p>
-
-                <div class="space-y-6">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-400 mb-2">Current Age</label>
-                        <input type="number" id="age" value="35" class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500">
+    <!-- Healthcare Calculator Section -->
+    <section id="calculator" class="py-24 bg-slate-900 text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+        <div class="max-w-4xl mx-auto px-4 relative z-10">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-4xl font-800 mb-6">Gain Health <br><span class="text-blue-400">Protect Capital</span></h2>
+                    <p class="text-slate-400 mb-8 leading-relaxed">Healthcare is often the single largest expense in retirement. Calculate your gap and start funding your longevity reserve today.</p>
+                    <div class="flex items-center space-x-4 text-sm font-bold text-blue-400 uppercase tracking-widest">
+                        <i class="fas fa-shield-alt text-2xl"></i>
+                        <span>Longevity Shield Protocol</span>
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-400 mb-2">Planned Retirement Age</label>
-                        <input type="number" id="retireAge" value="65" class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-400 mb-2">Health Profile</label>
-                        <select id="lifestyle" class="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-blue-500">
-                            <option value="1.0">Active & Healthy</option>
-                            <option value="1.3" selected>Moderate / Average</option>
-                            <option value="1.8">Pre-existing Concerns</option>
+                </div>
+                <div class="bg-white/10 backdrop-blur-md p-8 rounded-3xl border border-white/10">
+                    <div class="space-y-4">
+                        <input type="number" id="age" placeholder="Current Age" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-blue-400">
+                        <input type="number" id="retireAge" placeholder="Retirement Age" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-blue-400">
+                        <select id="vigor" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white outline-none focus:border-blue-400">
+                            <option value="1.0" class="bg-slate-800">Elite Performance (Low Risk)</option>
+                            <option value="1.3" selected class="bg-slate-800">Average / Standard</option>
+                            <option value="1.8" class="bg-slate-800">High Care Requirements</option>
                         </select>
-                    </div>
-                    <button onclick="calculateHealthcare()" class="w-full py-4 accent-gradient rounded-xl font-bold text-white text-lg hover:shadow-2xl hover:shadow-blue-500/30 transition">Calculate Future Cost</button>
-
-                    <div id="calcResults" class="hidden mt-8 p-6 bg-white/5 rounded-2xl border border-blue-500/20">
-                        <div class="text-center">
-                            <p class="text-gray-400 text-sm mb-1 uppercase tracking-widest">Lifetime Spending Estimate</p>
-                            <p id="totalCost" class="text-4xl font-extrabold text-blue-400 mb-4">$0</p>
-                            <p class="text-gray-400 text-xs italic">Includes premiums and out-of-pocket gaps, adjusted for 4% medical inflation.</p>
+                        <button onclick="calculate()" class="w-full py-4 bg-blue-600 hover:bg-blue-500 rounded-xl font-bold transition">Get Gain Estimate</button>
+                        <div id="calcRes" class="hidden text-center pt-4 border-t border-white/10 mt-4">
+                            <p class="text-xs text-slate-400 uppercase font-bold tracking-widest">Reserve Goal</p>
+                            <p id="resValue" class="text-3xl font-800 text-blue-400 mt-1">$0</p>
                         </div>
                     </div>
                 </div>
@@ -180,127 +126,183 @@
         </div>
     </section>
 
-    <!-- Affiliate Banner Bottom (Newsletter) -->
-    <div class="max-w-7xl mx-auto px-4 py-20">
-        <div class="glass p-1 rounded-3xl bg-gradient-to-r from-blue-600/20 to-emerald-600/20">
-            <div class="glass rounded-[calc(1.5rem-1px)] p-10 flex flex-col md:flex-row items-center justify-between text-center md:text-left gap-8">
-                <div>
-                    <h3 class="text-2xl font-bold text-white mb-2">Build Your Gain Strategy</h3>
-                    <p class="text-gray-400">Join the inner circle for weekly performance optimization insights.</p>
-                </div>
-                <div class="w-full md:w-auto">
-                    <form id="subscribeForm" class="flex flex-col sm:flex-row gap-2">
-                        <input type="email" id="subscriberEmail" placeholder="Your best email" required class="bg-black/50 border border-white/10 rounded-xl px-6 py-3 text-white focus:outline-none focus:border-blue-500">
-                        <button type="submit" id="submitBtn" class="px-8 py-3 bg-white text-black font-bold rounded-xl whitespace-nowrap hover:bg-blue-400 hover:text-white transition">Join Now</button>
-                    </form>
-                </div>
+    <!-- Newsletter -->
+    <section id="newsletter" class="py-24 bg-white">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="w-16 h-16 accent-gradient rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-xl shadow-blue-500/20">
+                <i class="fas fa-paper-plane text-white text-xl"></i>
             </div>
+            <h2 class="text-3xl md:text-5xl font-800 text-slate-900 mb-6 tracking-tight">Weekly Alpha</h2>
+            <p class="text-slate-500 mb-10 text-lg">Direct, high-signal protocols for optimizing your biology and your balance sheet.</p>
+            <form id="subForm" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
+                <input type="email" id="subEmail" required placeholder="Enter your best email" class="flex-1 px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:outline-none focus:border-blue-600">
+                <button type="submit" id="subBtn" class="px-10 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-blue-600 transition">Join</button>
+            </form>
         </div>
-    </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="py-12 border-t border-white/5 bg-black/20 text-center">
-        <div class="max-w-7xl mx-auto px-4">
-            <span class="text-lg font-bold text-white italic uppercase">THE<span class="text-blue-500">GAIN</span>MAKER</span>
-            <p class="text-gray-600 text-xs mt-4">© 2026 TheGainMaker.com. All Rights Reserved.</p>
+    <footer class="py-12 border-t border-slate-100 bg-white">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
+            <span class="text-lg font-800 italic uppercase">THE<span class="text-blue-600">GAIN</span>MAKER</span>
+            <div class="flex space-x-8 text-xs font-bold text-slate-400 uppercase tracking-widest">
+                <a href="#" class="hover:text-blue-600">Affiliate Disclosure</a>
+                <a href="#" class="hover:text-blue-600">Terms</a>
+                <a href="#" class="hover:text-blue-600">Contact</a>
+            </div>
+            <p class="text-slate-400 text-[10px] font-bold">© 2026 THE GAIN MAKER. ALL RIGHTS RESERVED.</p>
         </div>
     </footer>
 
-    <!-- FIREBASE & LOGIC -->
+    <!-- LOGIC ENGINE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
+        // CONFIG
         const firebaseConfig = JSON.parse(__firebase_config);
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'thegainmaker-default';
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'gainmaker-v1';
 
-        let currentUser = null;
+        // FOUNDATION DATA (30 Items)
+        const foundation = [
+            // HEALTH (10)
+            { cat: 'health', title: 'The Zone 2 Protocol', desc: 'Why low-intensity cardio is the secret to cellular longevity.', img: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'health', title: 'Sleep Hygiene Mastery', desc: 'Advanced techniques for reaching 90%+ sleep efficiency.', img: 'https://images.unsplash.com/photo-1541480601022-2308c0f02487?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'health', title: 'The VO2 Max Lever', desc: 'Predicting lifespan through aerobic capacity.', img: 'https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'health', title: 'Microbiome Optimization', desc: 'A gut-first approach to mental clarity.', img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'health', title: 'Cold Exposure Logic', desc: 'Brown fat activation and dopamine baseline resets.', img: 'https://images.unsplash.com/photo-1517344834466-7f05d27b3338?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'health', title: 'Hydration Precision', desc: 'Moving beyond "8 glasses a day" to electrolyte balance.', img: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'health', title: 'Blue Light Mitigation', desc: 'Protecting your circadian rhythm in a digital world.', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'health', title: 'Resistance Training for Ages', desc: 'Maintaining muscle mass as a metabolic sink.', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'health', title: 'The Fasting Window', desc: 'Autophagy and metabolic flexibility protocols.', img: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'health', title: 'Mobility as Currency', desc: 'Ensuring your body can move as well as your mind.', img: 'https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&q=80&w=400' },
+            
+            // MONEY (10)
+            { cat: 'money', title: 'Index Fund Efficiency', desc: 'The tax-advantaged path to a $5M portfolio.', img: 'https://images.unsplash.com/photo-1611974714024-460777dc5941?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'money', title: 'HSA: The Ultimate Loophole', desc: 'Using health accounts as hidden retirement vehicles.', img: 'https://images.unsplash.com/photo-1573164773711-331694d765d4?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'money', title: 'Real Estate Tokenization', desc: 'The future of fractional asset ownership.', img: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'money', title: 'Side-Hustle Automation', desc: 'Building digital assets that pay while you sleep.', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'money', title: 'Bitcoin as Gold 2.0', desc: 'A risk-mitigated approach to sovereign wealth.', img: 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'money', title: 'Tax Loss Harvesting', desc: 'The pro way to turn market red into tax credits.', img: 'https://images.unsplash.com/photo-1554224155-1696413565d3?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'money', title: 'The High-Yield Ladder', desc: 'Optimizing cash flow in a 5% world.', img: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'money', title: 'Withdrawal Rate Realities', desc: 'Navigating the 4% rule with current inflation.', img: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'money', title: 'Venture Capital Basics', desc: 'How to angel invest without a finance degree.', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'money', title: 'Offshore Arbitrage', desc: 'Lowering your burn rate by becoming a global citizen.', img: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=400' },
 
-        // Initialize Auth
-        const initAuth = async () => {
+            // BOOKS (10)
+            { cat: 'books', title: 'Deep Work', desc: 'By Cal Newport - Mastering focus in a noisy world.', img: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'books', title: 'Atomic Habits', desc: 'By James Clear - The math of 1% improvement.', img: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'books', title: 'Psychology of Money', desc: 'By Morgan Housel - Lessons on greed and logic.', img: 'https://images.unsplash.com/photo-1541963463532-d68292c34b19?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'books', title: 'Meditations', desc: 'By Marcus Aurelius - Stoicism for high-performers.', img: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'books', title: 'Skin in the Game', desc: 'By Nassim Taleb - Hidden asymmetries in life.', img: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'books', title: 'Zero to One', desc: 'By Peter Thiel - Notes on start-ups and secrets.', img: 'https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'books', title: 'Outlive', desc: 'By Peter Attia - The science of longevity.', img: 'https://images.unsplash.com/photo-1505682634904-d7c8d95ccd50?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'books', title: 'The Alchemist', desc: 'By Paulo Coelho - Finding your personal legend.', img: 'https://images.unsplash.com/photo-1491841573634-28140fc7ced7?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'books', title: 'Tools of Titans', desc: 'By Tim Ferriss - Tactics of world-class performers.', img: 'https://images.unsplash.com/photo-1543004218-283029ee986c?auto=format&fit=crop&q=80&w=400' },
+            { cat: 'books', title: 'Man\'s Search for Meaning', desc: 'By Viktor Frankl - Finding purpose in any state.', img: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=400' }
+        ];
+
+        let currentTab = 'health';
+        let cloudContent = [];
+
+        // UI Helpers
+        const grid = document.getElementById('content-grid');
+        const showToast = (msg) => {
+            const t = document.getElementById('toast');
+            t.textContent = msg; t.className = 'show';
+            setTimeout(() => t.className = '', 3000);
+        };
+
+        const renderGrid = () => {
+            grid.innerHTML = '';
+            // Merge foundation with cloud content
+            const allContent = [...foundation, ...cloudContent];
+            const filtered = allContent.filter(item => item.cat === currentTab);
+            
+            filtered.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-[32px] p-4 border border-slate-100 hover:border-blue-200 transition duration-300 card-enter';
+                card.style.animationDelay = `${index * 0.05}s`;
+                card.innerHTML = `
+                    <div class="aspect-[16/10] overflow-hidden rounded-[24px] mb-6">
+                        <img src="${item.img}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="px-2 pb-2">
+                        <h3 class="text-xl font-bold mb-2 text-slate-900">${item.title}</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed mb-6">${item.desc}</p>
+                        <a href="#" class="inline-flex items-center text-blue-600 text-xs font-bold uppercase tracking-widest hover:translate-x-1 transition">
+                            Protocol Alpha <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        };
+
+        window.setActiveTab = (tab) => {
+            currentTab = tab;
+            ['health', 'money', 'books'].forEach(t => {
+                document.getElementById(`tab-${t}`).className = `pb-4 text-sm font-bold uppercase tracking-widest transition ${t === tab ? 'tab-active' : 'text-slate-400'}`;
+            });
+            renderGrid();
+        };
+
+        // Initialize App
+        const init = async () => {
             try {
                 await signInAnonymously(auth);
-            } catch (error) {
-                console.error("Auth failed:", error);
+                // Fetch dynamic content from Firebase
+                const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'articles'), orderBy('timestamp', 'desc'));
+                const querySnapshot = await getDocs(q);
+                cloudContent = querySnapshot.docs.map(doc => doc.data());
+                renderGrid();
+            } catch (e) {
+                console.error(e);
+                renderGrid(); // Fallback to foundation
             }
         };
 
-        initAuth();
+        init();
 
-        onAuthStateChanged(auth, (user) => {
-            currentUser = user;
-        });
-
-        // Handle Newsletter Subscription
-        const subscribeForm = document.getElementById('subscribeForm');
-        const emailInput = document.getElementById('subscriberEmail');
-        const submitBtn = document.getElementById('submitBtn');
-
-        subscribeForm.onsubmit = async (e) => {
+        // Handle Newsletter
+        document.getElementById('subForm').onsubmit = async (e) => {
             e.preventDefault();
-            const email = emailInput.value;
-
-            if (!currentUser) {
-                showToast("Connection error. Try again.");
-                return;
-            }
-
-            submitBtn.disabled = true;
-            submitBtn.textContent = "Joining...";
-
+            const email = document.getElementById('subEmail').value;
+            const btn = document.getElementById('subBtn');
+            btn.disabled = true; btn.textContent = 'Joining...';
             try {
-                // Save to private path: /artifacts/{appId}/public/data/subscribers
-                // We use 'public/data' because subscribers is a common collection, but usually you'd want 'users' for private data.
-                // For a newsletter, storing it in public/data is fine as long as security rules are handled.
                 await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'subscribers'), {
-                    email: email,
-                    timestamp: serverTimestamp(),
-                    source: 'homepage_footer'
+                    email, timestamp: serverTimestamp()
                 });
-
-                showToast("Welcome to the team!");
-                emailInput.value = "";
-            } catch (error) {
-                console.error("Subscription error:", error);
-                showToast("Something went wrong. Try again later.");
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = "Join Now";
-            }
+                showToast("Welcome to the circle.");
+                document.getElementById('subEmail').value = '';
+            } catch (err) { showToast("Error connecting."); }
+            finally { btn.disabled = false; btn.textContent = 'Join'; }
         };
 
-        function showToast(message) {
-            const toast = document.getElementById("toast");
-            toast.textContent = message;
-            toast.className = "show";
-            setTimeout(() => { toast.className = toast.className.replace("show", ""); }, 3000);
-        }
-
-        // Expose calculator to window
-        window.calculateHealthcare = function() {
+        // Calculator
+        window.calculate = () => {
             const age = parseInt(document.getElementById('age').value);
-            const retireAge = parseInt(document.getElementById('retireAge').value);
-            const lifestyle = parseFloat(document.getElementById('lifestyle').value);
-            
-            if (isNaN(age) || isNaN(retireAge)) return;
+            const rAge = parseInt(document.getElementById('retireAge').value);
+            const vigor = parseFloat(document.getElementById('vigor').value);
+            if (!age || !rAge) return;
+            const res = 165000 * Math.pow(1.04, Math.max(0, rAge - age)) * vigor;
+            document.getElementById('calcRes').classList.remove('hidden');
+            document.getElementById('resValue').textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(res);
+        };
 
-            const baselineCostAt65 = 165000; 
-            const yearsUntilRetirement = Math.max(0, retireAge - age);
-            const projectedCost = baselineCostAt65 * Math.pow(1.03, yearsUntilRetirement) * lifestyle;
-            
-            const resultsDiv = document.getElementById('calcResults');
-            const totalCostEl = document.getElementById('totalCost');
-            
-            resultsDiv.classList.remove('hidden');
-            totalCostEl.textContent = new Intl.NumberFormat('en-US', {
-                style: 'currency', currency: 'USD', maximumFractionDigits: 0
-            }).format(projectedCost);
-            
-            resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        // ADMIN: Sync Function (You can run this manually to push the 30 items to your cloud)
+        document.getElementById('sync-btn').onclick = async () => {
+            for (let item of foundation) {
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'articles'), {
+                    ...item, timestamp: serverTimestamp()
+                });
+            }
+            showToast("Cloud Synced.");
         };
     </script>
 </body>
