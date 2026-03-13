@@ -156,155 +156,91 @@
 
     <!-- LOGIC ENGINE -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    // --- 1. FOUNDATION DATA ---
+    const foundation = [
+        { cat: 'health', title: 'The Zone 2 Protocol', desc: 'Why low-intensity cardio is the secret to cellular longevity.', img: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'health', title: 'Sleep Hygiene Mastery', desc: 'Advanced techniques for reaching 90%+ sleep efficiency.', img: 'https://images.unsplash.com/photo-1541480601022-2308c0f02487?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'health', title: 'The VO2 Max Lever', desc: 'Predicting lifespan through aerobic capacity.', img: 'https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'health', title: 'Microbiome Optimization', desc: 'A gut-first approach to mental clarity.', img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'health', title: 'Cold Exposure Logic', desc: 'Brown fat activation and dopamine baseline resets.', img: 'https://images.unsplash.com/photo-1517344834466-7f05d27b3338?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'health', title: 'Hydration Precision', desc: 'Moving beyond "8 glasses a day" to electrolyte balance.', img: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'health', title: 'Blue Light Mitigation', desc: 'Protecting your circadian rhythm in a digital world.', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'health', title: 'Resistance Training for Ages', desc: 'Maintaining muscle mass as a metabolic sink.', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'health', title: 'The Fasting Window', desc: 'Autophagy and metabolic flexibility protocols.', img: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'health', title: 'Mobility as Currency', desc: 'Ensuring your body can move as well as your mind.', img: 'https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'money', title: 'Index Fund Efficiency', desc: 'The tax-advantaged path to a $5M portfolio.', img: 'https://images.unsplash.com/photo-1611974714024-460777dc5941?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'money', title: 'HSA: The Ultimate Loophole', desc: 'Using health accounts as hidden retirement vehicles.', img: 'https://images.unsplash.com/photo-1573164773711-331694d765d4?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'money', title: 'Real Estate Tokenization', desc: 'The future of fractional asset ownership.', img: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'money', title: 'Side-Hustle Automation', desc: 'Building digital assets that pay while you sleep.', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'money', title: 'Bitcoin as Gold 2.0', desc: 'A risk-mitigated approach to sovereign wealth.', img: 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'money', title: 'Tax Loss Harvesting', desc: 'The pro way to turn market red into tax credits.', img: 'https://images.unsplash.com/photo-1554224155-1696413565d3?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'money', title: 'The High-Yield Ladder', desc: 'Optimizing cash flow in a 5% world.', img: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'money', title: 'Withdrawal Rate Realities', desc: 'Navigating the 4% rule with current inflation.', img: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'money', title: 'Venture Capital Basics', desc: 'How to angel invest without a finance degree.', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'money', title: 'Offshore Arbitrage', desc: 'Lowering your burn rate by becoming a global citizen.', img: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'books', title: 'Deep Work', desc: 'By Cal Newport - Mastering focus in a noisy world.', img: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'books', title: 'Atomic Habits', desc: 'By James Clear - The math of 1% improvement.', img: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'books', title: 'Psychology of Money', desc: 'By Morgan Housel - Lessons on greed and logic.', img: 'https://images.unsplash.com/photo-1541963463532-d68292c34b19?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'books', title: 'Meditations', desc: 'By Marcus Aurelius - Stoicism for high-performers.', img: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'books', title: 'Skin in the Game', desc: 'By Nassim Taleb - Hidden asymmetries in life.', img: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'books', title: 'Zero to One', desc: 'By Peter Thiel - Notes on start-ups and secrets.', img: 'https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'books', title: 'Outlive', desc: 'By Peter Attia - The science of longevity.', img: 'https://images.unsplash.com/photo-1505682634904-d7c8d95ccd50?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'books', title: 'The Alchemist', desc: 'By Paulo Coelho - Finding your personal legend.', img: 'https://images.unsplash.com/photo-1491841573634-28140fc7ced7?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'books', title: 'Tools of Titans', desc: 'By Tim Ferriss - Tactics of world-class performers.', img: 'https://images.unsplash.com/photo-1543004218-283029ee986c?auto=format&fit=crop&q=80&w=400' },
+        { cat: 'books', title: 'Man\'s Search for Meaning', desc: 'By Viktor Frankl - Finding purpose in any state.', img: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=400' }
+    ];
 
-        // CONFIG
-        const firebaseConfig = JSON.parse(__firebase_config);
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'gainmaker-v1';
+    let currentTab = 'health';
+    const grid = document.getElementById('content-grid');
 
-        // FOUNDATION DATA (30 Items)
-        const foundation = [
-            // HEALTH (10)
-            { cat: 'health', title: 'The Zone 2 Protocol', desc: 'Why low-intensity cardio is the secret to cellular longevity.', img: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'health', title: 'Sleep Hygiene Mastery', desc: 'Advanced techniques for reaching 90%+ sleep efficiency.', img: 'https://images.unsplash.com/photo-1541480601022-2308c0f02487?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'health', title: 'The VO2 Max Lever', desc: 'Predicting lifespan through aerobic capacity.', img: 'https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'health', title: 'Microbiome Optimization', desc: 'A gut-first approach to mental clarity.', img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'health', title: 'Cold Exposure Logic', desc: 'Brown fat activation and dopamine baseline resets.', img: 'https://images.unsplash.com/photo-1517344834466-7f05d27b3338?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'health', title: 'Hydration Precision', desc: 'Moving beyond "8 glasses a day" to electrolyte balance.', img: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'health', title: 'Blue Light Mitigation', desc: 'Protecting your circadian rhythm in a digital world.', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'health', title: 'Resistance Training for Ages', desc: 'Maintaining muscle mass as a metabolic sink.', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'health', title: 'The Fasting Window', desc: 'Autophagy and metabolic flexibility protocols.', img: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'health', title: 'Mobility as Currency', desc: 'Ensuring your body can move as well as your mind.', img: 'https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&q=80&w=400' },
-            
-            // MONEY (10)
-            { cat: 'money', title: 'Index Fund Efficiency', desc: 'The tax-advantaged path to a $5M portfolio.', img: 'https://images.unsplash.com/photo-1611974714024-460777dc5941?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'money', title: 'HSA: The Ultimate Loophole', desc: 'Using health accounts as hidden retirement vehicles.', img: 'https://images.unsplash.com/photo-1573164773711-331694d765d4?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'money', title: 'Real Estate Tokenization', desc: 'The future of fractional asset ownership.', img: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'money', title: 'Side-Hustle Automation', desc: 'Building digital assets that pay while you sleep.', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'money', title: 'Bitcoin as Gold 2.0', desc: 'A risk-mitigated approach to sovereign wealth.', img: 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'money', title: 'Tax Loss Harvesting', desc: 'The pro way to turn market red into tax credits.', img: 'https://images.unsplash.com/photo-1554224155-1696413565d3?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'money', title: 'The High-Yield Ladder', desc: 'Optimizing cash flow in a 5% world.', img: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'money', title: 'Withdrawal Rate Realities', desc: 'Navigating the 4% rule with current inflation.', img: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'money', title: 'Venture Capital Basics', desc: 'How to angel invest without a finance degree.', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'money', title: 'Offshore Arbitrage', desc: 'Lowering your burn rate by becoming a global citizen.', img: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=400' },
+    // --- 2. RENDER FUNCTION ---
+    window.renderGrid = () => {
+        grid.innerHTML = '';
+        const filtered = foundation.filter(item => item.cat === currentTab);
+        
+        filtered.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'bg-white rounded-[32px] p-4 border border-slate-100 hover:border-blue-200 transition duration-300 card-enter shadow-sm hover:shadow-xl';
+            card.style.animationDelay = `${index * 0.05}s`;
+            card.innerHTML = `
+                <div class="aspect-[16/10] overflow-hidden rounded-[24px] mb-6 bg-slate-100">
+                    <img src="${item.img}" class="w-full h-full object-cover">
+                </div>
+                <div class="px-2 pb-2">
+                    <h3 class="text-xl font-bold mb-2 text-slate-900">${item.title}</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-6">${item.desc}</p>
+                    <a href="#" class="inline-flex items-center text-blue-600 text-xs font-bold uppercase tracking-widest hover:translate-x-1 transition">
+                        Protocol Alpha <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            `;
+            grid.appendChild(card);
+        });
+    };
 
-            // BOOKS (10)
-            { cat: 'books', title: 'Deep Work', desc: 'By Cal Newport - Mastering focus in a noisy world.', img: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'books', title: 'Atomic Habits', desc: 'By James Clear - The math of 1% improvement.', img: 'https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'books', title: 'Psychology of Money', desc: 'By Morgan Housel - Lessons on greed and logic.', img: 'https://images.unsplash.com/photo-1541963463532-d68292c34b19?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'books', title: 'Meditations', desc: 'By Marcus Aurelius - Stoicism for high-performers.', img: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'books', title: 'Skin in the Game', desc: 'By Nassim Taleb - Hidden asymmetries in life.', img: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'books', title: 'Zero to One', desc: 'By Peter Thiel - Notes on start-ups and secrets.', img: 'https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'books', title: 'Outlive', desc: 'By Peter Attia - The science of longevity.', img: 'https://images.unsplash.com/photo-1505682634904-d7c8d95ccd50?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'books', title: 'The Alchemist', desc: 'By Paulo Coelho - Finding your personal legend.', img: 'https://images.unsplash.com/photo-1491841573634-28140fc7ced7?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'books', title: 'Tools of Titans', desc: 'By Tim Ferriss - Tactics of world-class performers.', img: 'https://images.unsplash.com/photo-1543004218-283029ee986c?auto=format&fit=crop&q=80&w=400' },
-            { cat: 'books', title: 'Man\'s Search for Meaning', desc: 'By Viktor Frankl - Finding purpose in any state.', img: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&q=80&w=400' }
-        ];
+    window.setActiveTab = (tab) => {
+        currentTab = tab;
+        ['health', 'money', 'books'].forEach(t => {
+            const el = document.getElementById(`tab-${t}`);
+            if(el) el.className = `pb-4 text-sm font-bold uppercase tracking-widest transition ${t === tab ? 'tab-active' : 'text-slate-400'}`;
+        });
+        window.renderGrid();
+    };
 
-        let currentTab = 'health';
-        let cloudContent = [];
+    // --- 3. CALCULATOR ---
+    window.calculate = () => {
+        const age = parseInt(document.getElementById('age').value);
+        const rAge = parseInt(document.getElementById('retireAge').value);
+        const vigor = parseFloat(document.getElementById('vigor').value);
+        if (!age || !rAge) return;
+        const res = 165000 * Math.pow(1.04, Math.max(0, rAge - age)) * vigor;
+        document.getElementById('calcRes').classList.remove('hidden');
+        document.getElementById('resValue').textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(res);
+    };
 
-        // UI Helpers
-        const grid = document.getElementById('content-grid');
-        const showToast = (msg) => {
-            const t = document.getElementById('toast');
-            t.textContent = msg; t.className = 'show';
-            setTimeout(() => t.className = '', 3000);
-        };
+    // Initial render on load
+    document.addEventListener('DOMContentLoaded', () => {
+        window.renderGrid();
+    });
 
-        const renderGrid = () => {
-            grid.innerHTML = '';
-            // Merge foundation with cloud content
-            const allContent = [...foundation, ...cloudContent];
-            const filtered = allContent.filter(item => item.cat === currentTab);
-            
-            filtered.forEach((item, index) => {
-                const card = document.createElement('div');
-                card.className = 'bg-white rounded-[32px] p-4 border border-slate-100 hover:border-blue-200 transition duration-300 card-enter';
-                card.style.animationDelay = `${index * 0.05}s`;
-                card.innerHTML = `
-                    <div class="aspect-[16/10] overflow-hidden rounded-[24px] mb-6">
-                        <img src="${item.img}" class="w-full h-full object-cover">
-                    </div>
-                    <div class="px-2 pb-2">
-                        <h3 class="text-xl font-bold mb-2 text-slate-900">${item.title}</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed mb-6">${item.desc}</p>
-                        <a href="#" class="inline-flex items-center text-blue-600 text-xs font-bold uppercase tracking-widest hover:translate-x-1 transition">
-                            Protocol Alpha <i class="fas fa-arrow-right ml-2"></i>
-                        </a>
-                    </div>
-                `;
-                grid.appendChild(card);
-            });
-        };
-
-        window.setActiveTab = (tab) => {
-            currentTab = tab;
-            ['health', 'money', 'books'].forEach(t => {
-                document.getElementById(`tab-${t}`).className = `pb-4 text-sm font-bold uppercase tracking-widest transition ${t === tab ? 'tab-active' : 'text-slate-400'}`;
-            });
-            renderGrid();
-        };
-
-        // Initialize App
-        const init = async () => {
-            try {
-                await signInAnonymously(auth);
-                // Fetch dynamic content from Firebase
-                const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'articles'), orderBy('timestamp', 'desc'));
-                const querySnapshot = await getDocs(q);
-                cloudContent = querySnapshot.docs.map(doc => doc.data());
-                renderGrid();
-            } catch (e) {
-                console.error(e);
-                renderGrid(); // Fallback to foundation
-            }
-        };
-
-        init();
-
-        // Handle Newsletter
-        document.getElementById('subForm').onsubmit = async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('subEmail').value;
-            const btn = document.getElementById('subBtn');
-            btn.disabled = true; btn.textContent = 'Joining...';
-            try {
-                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'subscribers'), {
-                    email, timestamp: serverTimestamp()
-                });
-                showToast("Welcome to the circle.");
-                document.getElementById('subEmail').value = '';
-            } catch (err) { showToast("Error connecting."); }
-            finally { btn.disabled = false; btn.textContent = 'Join'; }
-        };
-
-        // Calculator
-        window.calculate = () => {
-            const age = parseInt(document.getElementById('age').value);
-            const rAge = parseInt(document.getElementById('retireAge').value);
-            const vigor = parseFloat(document.getElementById('vigor').value);
-            if (!age || !rAge) return;
-            const res = 165000 * Math.pow(1.04, Math.max(0, rAge - age)) * vigor;
-            document.getElementById('calcRes').classList.remove('hidden');
-            document.getElementById('resValue').textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(res);
-        };
-
-        // ADMIN: Sync Function (You can run this manually to push the 30 items to your cloud)
-        document.getElementById('sync-btn').onclick = async () => {
-            for (let item of foundation) {
-                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'articles'), {
-                    ...item, timestamp: serverTimestamp()
-                });
-            }
-            showToast("Cloud Synced.");
-        };
-    </script>
-</body>
-</html>
-
+</script>
