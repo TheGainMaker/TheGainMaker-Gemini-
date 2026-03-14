@@ -14,9 +14,24 @@
         .text-gradient { background: linear-gradient(135deg, #1e40af 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .tab-active { color: #2563eb; border-bottom: 3px solid #2563eb; }
         .card-shadow { box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.05); }
-        .gain-card { transition: all 0.3s ease; }
-        .gain-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.1); }
+        .gain-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .gain-card:hover { transform: translateY(-6px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); }
         
+        /* Fallback Placeholder Styling */
+        .image-fallback {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            color: #64748b;
+            font-weight: 700;
+            text-align: center;
+            padding: 20px;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
         #toast {
             visibility: hidden; min-width: 200px; background-color: #0f172a; color: #fff;
             text-align: center; border-radius: 50px; padding: 14px; position: fixed; z-index: 100;
@@ -88,7 +103,7 @@
         <div class="max-w-5xl mx-auto px-4 relative z-10 grid md:grid-cols-2 gap-16 items-center">
             <div>
                 <h2 class="text-4xl md:text-5xl font-800 mb-8 leading-tight">Gain Health.<br><span class="text-blue-400">Protect Capital.</span></h2>
-                <p class="text-slate-400 text-lg leading-relaxed mb-8">Healthcare is often the single largest expense in retirement. Estimate your projected needs and start funding your longevity reserve.</p>
+                <p class="text-slate-400 text-lg leading-relaxed mb-8">Healthcare is often the single largest expense in retirement. Estimate your projected needs and start funding your longevity reserve today.</p>
                 <div class="flex items-center space-x-4 text-blue-400 font-bold uppercase tracking-widest text-sm">
                     <i class="fas fa-shield-alt text-2xl"></i>
                     <span>Longevity Shield Protocol</span>
@@ -115,12 +130,12 @@
                     <button onclick="calculate()" class="w-full py-5 bg-blue-600 hover:bg-blue-500 rounded-2xl font-bold text-lg shadow-xl shadow-blue-600/20 transition-all active:scale-95">Calculate Capital Reserve</button>
                     <div id="calcRes" class="hidden text-center pt-8 border-t border-white/10 mt-6 animate-pulse">
                         <p class="text-xs text-slate-400 font-bold uppercase tracking-widest mb-2">Projected Reserve Goal</p>
-                        <p id="resValue" class="text-4xl font-800 text-blue-400">$0</p>
+                        <p id="resValue" class="text-4xl font-800 text-blue-400 mt-2">$0</p>
                     </div>
                 </div>
             </div>
         </div>
-    </header>
+    </section>
 
     <!-- Newsletter -->
     <section id="newsletter" class="py-32 bg-white px-4">
@@ -151,7 +166,7 @@
     </footer>
 
     <script>
-        // MASTER DATA ARRAY
+        // MASTER DATA ARRAY - Using ISBN-13 for high reliability
         const library = [
             // HEALTH (10)
             { cat: 'health', title: 'The Zone 2 Protocol', desc: 'Why low-intensity cardio is the secret to cellular longevity and metabolic flexibility.', img: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=600' },
@@ -177,21 +192,31 @@
             { cat: 'money', title: 'Venture Fundamentals', desc: 'The path to angel investing for non-finance professionals and creators.', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600' },
             { cat: 'money', title: 'Global Arbitrage', desc: 'Leveraging digital nomadism and offshore structures for tax optimization.', img: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=600' },
             
-            // BOOKS (10 - Using Google Books API Thumbnails for reliability)
-            { cat: 'books', title: 'Deep Work', desc: 'Cal Newport - On mastering focus in a distracted digital world.', img: 'https://books.google.com/books/content?id=8ToJDAAAQBAJ&printsec=frontcover&img=1&zoom=1' },
-            { cat: 'books', title: 'Atomic Habits', desc: 'James Clear - Small changes, remarkable results for high-performers.', img: 'https://books.google.com/books/content?id=Xf6uDwAAQBAJ&printsec=frontcover&img=1&zoom=1' },
-            { cat: 'books', title: 'Psychology of Money', desc: 'Morgan Housel - Essential lessons on greed, logic, and wealth.', img: 'https://books.google.com/books/content?id=f_S_DwAAQBAJ&printsec=frontcover&img=1&zoom=1' },
-            { cat: 'books', title: 'Meditations', desc: 'Marcus Aurelius - The ultimate protocol for mental resilience.', img: 'https://books.google.com/books/content?id=2zU_DwAAQBAJ&printsec=frontcover&img=1&zoom=1' },
-            { cat: 'books', title: 'Skin in the Game', desc: 'Nassim Taleb - Understanding hidden asymmetries in daily life.', img: 'https://books.google.com/books/content?id=u_K-DwAAQBAJ&printsec=frontcover&img=1&zoom=1' },
-            { cat: 'books', title: 'Zero to One', desc: 'Peter Thiel - Notes on start-ups and how to build the future.', img: 'https://books.google.com/books/content?id=3_S-DwAAQBAJ&printsec=frontcover&img=1&zoom=1' },
-            { cat: 'books', title: 'Outlive', desc: 'Peter Attia - The definitive guide to the science of longevity.', img: 'https://books.google.com/books/content?id=6vCZEAAAQBAJ&printsec=frontcover&img=1&zoom=1' },
-            { cat: 'books', title: 'The Alchemist', desc: 'Paulo Coelho - A fable about finding your personal legend.', img: 'https://books.google.com/books/content?id=f9_DAAAQBAJ&printsec=frontcover&img=1&zoom=1' },
-            { cat: 'books', title: 'Tools of Titans', desc: 'Tim Ferriss - The tactics and routines of world-class performers.', img: 'https://books.google.com/books/content?id=vV_DAAAQBAJ&printsec=frontcover&img=1&zoom=1' },
-            { cat: 'books', title: 'Search for Meaning', desc: 'Viktor Frankl - Finding purpose and drive in any circumstance.', img: 'https://books.google.com/books/content?id=a_S_DwAAQBAJ&printsec=frontcover&img=1&zoom=1' }
+            // BOOKS (10 - Using Open Library ISBNs for max reliability)
+            { cat: 'books', title: 'Deep Work', desc: 'Cal Newport - On mastering focus in a distracted digital world.', img: 'https://covers.openlibrary.org/b/isbn/9781455586691-L.jpg' },
+            { cat: 'books', title: 'Atomic Habits', desc: 'James Clear - Small changes, remarkable results for high-performers.', img: 'https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg' },
+            { cat: 'books', title: 'Psychology of Money', desc: 'Morgan Housel - Essential lessons on greed, logic, and wealth.', img: 'https://covers.openlibrary.org/b/isbn/9780857197689-L.jpg' },
+            { cat: 'books', title: 'Meditations', desc: 'Marcus Aurelius - The ultimate protocol for mental resilience.', img: 'https://covers.openlibrary.org/b/isbn/9780812968255-L.jpg' },
+            { cat: 'books', title: 'Skin in the Game', desc: 'Nassim Taleb - Understanding hidden asymmetries in daily life.', img: 'https://covers.openlibrary.org/b/isbn/9780425284643-L.jpg' },
+            { cat: 'books', title: 'Zero to One', desc: 'Peter Thiel - Notes on start-ups and how to build the future.', img: 'https://covers.openlibrary.org/b/isbn/9780804139298-L.jpg' },
+            { cat: 'books', title: 'Outlive', desc: 'Peter Attia - The definitive guide to the science of longevity.', img: 'https://covers.openlibrary.org/b/isbn/9780593236598-L.jpg' },
+            { cat: 'books', title: 'The Alchemist', desc: 'Paulo Coelho - A fable about finding your personal legend.', img: 'https://covers.openlibrary.org/b/isbn/9780062315007-L.jpg' },
+            { cat: 'books', title: 'Tools of Titans', desc: 'Tim Ferriss - The tactics and routines of world-class performers.', img: 'https://covers.openlibrary.org/b/isbn/9781328683045-L.jpg' },
+            { cat: 'books', title: 'Search for Meaning', desc: 'Viktor Frankl - Finding purpose and drive in any circumstance.', img: 'https://covers.openlibrary.org/b/isbn/9780807014295-L.jpg' }
         ];
 
         let activeTab = 'health';
         const grid = document.getElementById('content-grid');
+
+        // This function handles image loading errors
+        function handleImgError(img, title) {
+            const container = img.parentElement;
+            img.style.display = 'none';
+            const fallback = document.createElement('div');
+            fallback.className = 'w-full h-full image-fallback';
+            fallback.innerText = title;
+            container.appendChild(fallback);
+        }
 
         function render() {
             grid.innerHTML = '';
@@ -200,15 +225,20 @@
             // Adjust card layout based on category
             const isBooks = activeTab === 'books';
             const aspect = isBooks ? 'aspect-[2/3]' : 'aspect-[16/10]';
-            const fit = isBooks ? 'object-contain p-4' : 'object-cover';
+            const fit = isBooks ? 'object-contain p-2' : 'object-cover';
 
             filtered.forEach(item => {
                 const card = document.createElement('div');
                 card.className = "bg-white rounded-[40px] p-5 border border-slate-100 gain-card card-shadow";
+                
+                // Construct the HTML with an onerror handler
                 card.innerHTML = `
-                    <div class="${aspect} rounded-[28px] overflow-hidden bg-slate-50 border border-slate-50 mb-8">
-                        <img src="${item.img}" class="w-full h-full ${fit} transition duration-700 hover:scale-110" 
-                             onerror="this.src='https://images.unsplash.com/photo-1543005128-d0b834948d6d?auto=format&fit=crop&q=80&w=400';">
+                    <div class="${aspect} rounded-[28px] overflow-hidden bg-slate-50 border border-slate-50 mb-8 flex items-center justify-center">
+                        <img src="${item.img}" 
+                             class="w-full h-full ${fit} transition duration-700 hover:scale-110" 
+                             onload="this.style.opacity='1'"
+                             style="opacity:0; transition: opacity 0.3s ease"
+                             onerror="handleImgError(this, '${item.title.replace(/'/g, "\\'")}')">
                     </div>
                     <div class="px-2">
                         <h3 class="text-xl font-800 mb-2 text-slate-900 leading-tight">${item.title}</h3>
@@ -232,14 +262,23 @@
         };
 
         window.calculate = () => {
-            const age = parseInt(document.getElementById('age').value);
-            const rAge = parseInt(document.getElementById('retireAge').value);
-            const v = parseFloat(document.getElementById('vigor').value);
+            const ageInput = document.getElementById('age');
+            const retireInput = document.getElementById('retireAge');
+            const vigorInput = document.getElementById('vigor');
+            
+            const age = parseInt(ageInput.value);
+            const rAge = parseInt(retireInput.value);
+            const v = parseFloat(vigorInput.value);
+            
             if (!age || !rAge) return;
             const years = Math.max(0, rAge - age);
             const res = 165000 * Math.pow(1.04, years) * v;
-            document.getElementById('calcRes').classList.remove('hidden');
-            document.getElementById('resValue').textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(res);
+            
+            const resDiv = document.getElementById('calcRes');
+            const valP = document.getElementById('resValue');
+            
+            resDiv.classList.remove('hidden');
+            valP.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(res);
         };
 
         // Subscription Toast
