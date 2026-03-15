@@ -8,7 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; scroll-behavior: smooth; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8fafc; scroll-behavior: smooth; margin: 0; }
         .glass-nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid #e2e8f0; position: fixed; top: 0; width: 100%; z-index: 100; }
         .accent-gradient { background: linear-gradient(135deg, #2563eb 0%, #10b981 100%); }
         .text-gradient { background: linear-gradient(135deg, #1e40af 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -16,8 +16,7 @@
         .gain-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .gain-card:hover { transform: translateY(-6px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); }
         .image-fallback { display: flex; align-items: center; justify-content: center; background: #f1f5f9; color: #64748b; font-weight: 700; text-align: center; padding: 20px; text-transform: uppercase; font-size: 0.75rem; }
-        
-        #toast { visibility: hidden; min-width: 250px; background-color: #0f172a; color: #fff; text-align: center; border-radius: 50px; padding: 14px; position: fixed; z-index: 200; left: 50%; bottom: 30px; transform: translateX(-50%); font-weight: 600; box-shadow: 0 10px 20px rgba(0,0,0,0.2); transition: all 0.3s; opacity: 0; }
+        #toast { visibility: hidden; min-width: 250px; background-color: #0f172a; color: #fff; text-align: center; border-radius: 50px; padding: 14px; position: fixed; z-index: 200; left: 50%; bottom: 30px; transform: translateX(-50%); font-weight: 600; opacity: 0; transition: 0.3s; }
         #toast.show { visibility: visible; opacity: 1; bottom: 40px; }
     </style>
 </head>
@@ -38,20 +37,18 @@
                 <a href="#content-hub" onclick="setActiveTab('health')" class="hover:text-blue-600">Health</a>
                 <a href="#content-hub" onclick="setActiveTab('money')" class="hover:text-blue-600">Money</a>
                 <a href="#content-hub" onclick="setActiveTab('books')" class="hover:text-blue-600">Books</a>
-                <a href="#calculator" class="px-5 py-2.5 bg-slate-900 text-white rounded-full hover:bg-blue-600 transition shadow-md">Calculator</a>
+                <a href="#calculator" class="px-5 py-2.5 bg-slate-900 text-white rounded-full hover:bg-blue-600 transition">Calculator</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero -->
     <header class="relative pt-48 pb-24 px-4 text-center bg-white border-b border-slate-50">
-        <h1 class="text-5xl md:text-7xl font-800 text-slate-900 mb-8 leading-[1.1] tracking-tight">
-            Optimize Your <span class="text-gradient">Biology</span>.<br>Scale Your <span class="text-gradient">Wealth</span>.
-        </h1>
-        <p class="text-lg text-slate-500 mb-12 max-w-2xl mx-auto leading-relaxed">Research-backed systems for high-performers. Manage your health like an investment and your wealth like a science.</p>
+        <h1 class="text-5xl md:text-7xl font-800 text-slate-900 mb-8 leading-[1.1]">Optimize <span class="text-gradient">Biology</span>.<br>Scale <span class="text-gradient">Wealth</span>.</h1>
+        <p class="text-lg text-slate-500 mb-10 max-w-2xl mx-auto leading-relaxed">Research-backed systems for high-performers. Manage your health like an investment and your wealth like a science.</p>
         <div class="flex justify-center gap-4">
-            <a href="#content-hub" class="px-10 py-4 bg-slate-900 text-white font-bold rounded-2xl shadow-xl hover:-translate-y-1 transition">View the Library</a>
-            <a href="#newsletter" class="px-10 py-4 border border-slate-200 font-bold rounded-2xl hover:bg-slate-50 transition">Join Newsletter</a>
+            <a href="#content-hub" class="px-10 py-4 bg-slate-900 text-white font-bold rounded-2xl shadow-xl hover:-translate-y-1 transition">View Library</a>
+            <a href="#newsletter" class="px-10 py-4 border border-slate-200 font-bold rounded-2xl">Join Newsletter</a>
         </div>
     </header>
 
@@ -66,31 +63,31 @@
                 </div>
             </div>
             <div id="content-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                <p class="col-span-full text-center text-slate-400">Loading library foundation...</p>
+                <!-- Initial items loaded via JS -->
             </div>
         </div>
     </section>
 
     <!-- Calculator -->
     <section id="calculator" class="py-32 bg-slate-900 text-white">
-        <div class="max-w-5xl mx-auto px-4 grid md:grid-cols-2 gap-16 items-center">
+        <div class="max-w-4xl mx-auto px-4 grid md:grid-cols-2 gap-16 items-center">
             <div>
-                <h2 class="text-4xl md:text-5xl font-800 mb-8 leading-tight">Gain Health.<br><span class="text-blue-400">Protect Capital.</span></h2>
-                <p class="text-slate-400 text-lg leading-relaxed mb-8">Healthcare is often the single largest expense in retirement. Estimate your projected needs and fund your longevity reserve today.</p>
+                <h2 class="text-4xl font-800 mb-6">Gain Health.<br><span class="text-blue-400">Protect Capital.</span></h2>
+                <p class="text-slate-400 leading-relaxed">Healthcare is the single largest expense in retirement. Estimate your needs and fund your longevity reserve.</p>
             </div>
-            <div class="bg-white/5 backdrop-blur-xl p-10 rounded-[40px] border border-white/10">
-                <div class="space-y-6">
-                    <input type="number" id="age" value="35" placeholder="Current Age" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white outline-none">
-                    <input type="number" id="retireAge" value="65" placeholder="Retirement Age" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white outline-none">
+            <div class="bg-white/5 p-10 rounded-[40px] border border-white/10">
+                <div class="space-y-4 text-left">
+                    <label class="block text-xs font-bold text-slate-400 uppercase ml-1">Current Age</label>
+                    <input type="number" id="age" value="35" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white outline-none">
+                    <label class="block text-xs font-bold text-slate-400 uppercase ml-1">Retirement Age</label>
+                    <input type="number" id="retireAge" value="65" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white outline-none">
+                    <label class="block text-xs font-bold text-slate-400 uppercase ml-1">Health Profile</label>
                     <select id="vigor" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white outline-none">
-                        <option value="1.0" class="bg-slate-800">Elite Performance</option>
+                        <option value="1.0" class="bg-slate-800">Elite / Biohacker</option>
                         <option value="1.3" selected class="bg-slate-800">Standard</option>
-                        <option value="1.8" class="bg-slate-800">High Care Needs</option>
                     </select>
-                    <button onclick="calculate()" class="w-full py-5 bg-blue-600 hover:bg-blue-500 rounded-2xl font-bold text-lg transition">Calculate Capital Reserve</button>
-                    <div id="calcRes" class="hidden text-center pt-8 border-t border-white/10 mt-6">
-                        <p id="resValue" class="text-4xl font-800 text-blue-400">$0</p>
-                    </div>
+                    <button onclick="calculate()" class="w-full py-5 bg-blue-600 rounded-2xl font-bold mt-4">Calculate Reserve</button>
+                    <div id="calcRes" class="hidden text-center pt-8 border-t border-white/10 mt-6 font-800 text-4xl text-blue-400">$0</div>
                 </div>
             </div>
         </div>
@@ -99,47 +96,53 @@
     <!-- Newsletter -->
     <section id="newsletter" class="py-32 bg-white text-center">
         <h2 class="text-3xl font-800 mb-4">The Weekly Gain</h2>
-        <p class="text-slate-500 mb-10 text-lg">Direct, high-signal protocols for optimization. Every Sunday.</p>
+        <p class="text-slate-500 mb-10 text-lg">One protocol for optimization. Every Sunday.</p>
         <form id="newsletterForm" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto px-4">
-            <input type="email" id="newsletterEmail" required placeholder="Enter your best email" class="flex-1 px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none">
-            <button type="submit" id="newsletterBtn" class="px-10 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-blue-600 transition">Join Circle</button>
+            <input type="email" id="newsletterEmail" required placeholder="Enter email" class="flex-1 px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none">
+            <button type="submit" id="newsletterBtn" class="px-10 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-blue-600 transition">Join</button>
         </form>
     </section>
 
     <footer class="py-16 border-t border-slate-100 bg-white text-center">
         <span class="text-xl font-800 italic uppercase text-slate-900">THE<span class="text-blue-600">GAIN</span>MAKER</span>
-        <p class="text-slate-400 text-[10px] mt-4 font-bold uppercase tracking-widest">© 2026 THE GAIN MAKER COLLECTIVE</p>
     </footer>
 
-    <!-- FIREBASE LOGIC -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Global placeholders (Will be populated by environment or your own config)
-        const firebaseConfig = JSON.parse(__firebase_config);
+        // --- PASTE YOUR FIREBASE CONFIG BELOW ---
+        const firebaseConfig = {
+            apiKey: "PASTE_HERE",
+            authDomain: "PASTE_HERE",
+            projectId: "PASTE_HERE",
+            storageBucket: "PASTE_HERE",
+            messagingSenderId: "PASTE_HERE",
+            appId: "PASTE_HERE"
+        };
+        // --- END OF CONFIG ---
+
+        const appId = "gainmaker-v1"; // Match security rules
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'thegainmaker-site';
 
-        // FOUNDATION DATA
-        const foundation = [
+        const library = [
             { cat: 'health', title: 'Zone 2 Protocol', desc: 'Low-intensity cardio for cellular longevity.', img: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=600' },
             { cat: 'health', title: 'Sleep Hygiene Mastery', desc: 'Reach 90%+ sleep efficiency.', img: 'https://images.unsplash.com/photo-1541480601022-2308c0f02487?auto=format&fit=crop&q=80&w=600' },
-            { cat: 'health', title: 'The VO2 Max Lever', desc: 'Predicting lifespan through aerobic benchmarks.', img: 'https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&q=80&w=600' },
+            { cat: 'health', title: 'VO2 Max Lever', desc: 'Predicting lifespan through aerobic capacity.', img: 'https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&q=80&w=600' },
             { cat: 'health', title: 'Microbiome Logic', desc: 'Gut-first approach to mental clarity.', img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=600' },
-            { cat: 'health', title: 'Cold Exposure', desc: 'Brown fat activation and dopamine resets.', img: 'https://images.unsplash.com/photo-1517344834466-7f05d27b3338?auto=format&fit=crop&q=80&w=600' },
-            { cat: 'health', title: 'Hydration Precision', desc: 'Electrolyte balance beyond water.', img: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&q=80&w=600' },
+            { cat: 'health', title: 'Cold Exposure Logic', desc: 'Brown fat activation and dopamine resets.', img: 'https://images.unsplash.com/photo-1517344834466-7f05d27b3338?auto=format&fit=crop&q=80&w=600' },
+            { cat: 'health', title: 'Hydration Precision', desc: 'Essential magnesium and sodium balance.', img: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&q=80&w=600' },
             { cat: 'health', title: 'Circadian Shielding', desc: 'Protecting your biological clock.', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=600' },
-            { cat: 'health', title: 'Resistance Fundamentals', desc: 'Muscle as your largest metabolic organ.', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=600' },
+            { cat: 'health', title: 'Resistance Fundamentals', desc: 'Skeletal muscle as a longevity organ.', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=600' },
             { cat: 'health', title: 'Autophagy Protocols', desc: 'Cellular cleanup and insulin resets.', img: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&q=80&w=600' },
             { cat: 'health', title: 'Mobility as Currency', desc: 'Maintaining range of motion with age.', img: 'https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&q=80&w=600' },
             { cat: 'money', title: 'Index Fund Efficiency', desc: 'The tax-advantaged path to $5M.', img: 'https://images.unsplash.com/photo-1611974714024-460777dc5941?auto=format&fit=crop&q=80&w=600' },
             { cat: 'money', title: 'HSA: The Hidden Asset', desc: 'Health accounts as retirement tools.', img: 'https://images.unsplash.com/photo-1573164773711-331694d765d4?auto=format&fit=crop&q=80&w=600' },
             { cat: 'money', title: 'Asset Tokenization', desc: 'Fractional real estate for individuals.', img: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=600' },
-            { cat: 'money', title: 'Bitcoin Strategy', desc: 'Sovereign wealth and digital scarcity.', img: 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&q=80&w=600' },
+            { cat: 'money', title: 'Bitcoin Strategy', desc: 'Risk-mitigated sovereign wealth.', img: 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&q=80&w=600' },
             { cat: 'money', title: 'Systems of Scale', desc: 'Building digital assets that operate solo.', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600' },
             { cat: 'money', title: 'Tax Loss Harvesting', desc: 'Turn volatility into tax credits.', img: 'https://images.unsplash.com/photo-1554224155-1696413565d3?auto=format&fit=crop&q=80&w=600' },
             { cat: 'money', title: 'High-Yield Ladder', desc: 'Optimizing cash flow in a 5% world.', img: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&q=80&w=600' },
@@ -159,45 +162,27 @@
         ];
 
         let activeTab = 'health';
-        let cloudArticles = [];
-        let currentUser = null;
-
         const grid = document.getElementById('content-grid');
-        const showToast = (msg) => {
-            const t = document.getElementById('toast');
-            t.textContent = msg; t.classList.add('show');
-            setTimeout(() => t.classList.remove('show'), 3000);
-        };
 
-        // RENDER ENGINE
-        function render() {
+        window.render = () => {
+            if(!grid) return;
             grid.innerHTML = '';
-            const all = [...foundation, ...cloudArticles];
-            const filtered = all.filter(i => i.cat === activeTab);
-            const isBooks = activeTab === 'books';
-            
+            const filtered = library.filter(i => i.cat === activeTab);
             filtered.forEach(item => {
                 const card = document.createElement('div');
-                card.className = "bg-white rounded-[40px] p-5 border border-slate-100 gain-card card-shadow";
-                const aspect = isBooks ? 'aspect-[2/3]' : 'aspect-[16/10]';
-                const fit = isBooks ? 'object-contain p-2' : 'object-cover';
-                
+                card.className = "bg-white rounded-[40px] p-5 border border-slate-100 gain-card card-shadow text-left";
+                const isBooks = activeTab === 'books';
                 card.innerHTML = `
-                    <div class="${aspect} rounded-[28px] overflow-hidden bg-slate-50 border border-slate-50 mb-8 flex items-center justify-center">
-                        <img src="${item.img}" class="w-full h-full ${fit} transition duration-700 hover:scale-110" 
-                             onerror="handleImgError(this, '${item.title.replace(/'/g, "\\'")}')">
+                    <div class="${isBooks ? 'aspect-[2/3]' : 'aspect-[16/10]'} rounded-[28px] overflow-hidden bg-slate-50 border border-slate-50 mb-8 flex items-center justify-center">
+                        <img src="${item.img}" class="w-full h-full ${isBooks ? 'object-contain p-2' : 'object-cover'}" onerror="handleImgError(this, '${item.title.replace(/'/g, "\\'")}')">
                     </div>
-                    <div class="px-2">
-                        <h3 class="text-xl font-800 mb-2 text-slate-900 leading-tight">${item.title}</h3>
-                        <p class="text-slate-500 text-sm leading-relaxed mb-8">${item.desc}</p>
-                        <a href="#" class="inline-flex items-center text-blue-600 font-bold text-xs uppercase tracking-widest group">
-                            Protocol Alpha <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
-                        </a>
-                    </div>
+                    <h3 class="text-xl font-800 mb-2 leading-tight">${item.title}</h3>
+                    <p class="text-slate-500 text-sm mb-8 leading-relaxed">${item.desc}</p>
+                    <a href="#" class="text-blue-600 font-bold text-xs uppercase tracking-widest">Protocol Alpha</a>
                 `;
                 grid.appendChild(card);
             });
-        }
+        };
 
         window.handleImgError = (img, title) => {
             const parent = img.parentElement;
@@ -214,84 +199,41 @@
                 const btn = document.getElementById('tab-' + id);
                 if (btn) btn.className = (id === t) ? 'pb-4 text-sm font-bold uppercase tracking-widest transition tab-active' : 'pb-4 text-sm font-bold uppercase tracking-widest transition text-slate-400';
             });
-            render();
+            window.render();
         };
 
-        // FIREBASE SYNC & AUTH
-        
-        const startApp = async () => {
-            try {
-                // RULE 3 - Auth Before Queries
-                const initAuth = async () => {
-                    if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                        await signInWithCustomToken(auth, __initial_auth_token);
-                    } else {
-                        await signInAnonymously(auth);
-                    }
-                };
-                await initAuth();
-
-                onAuthStateChanged(auth, async (user) => {
-                    if (user) {
-                        currentUser = user;
-                        // Fetch dynamic articles
-                        const q = query(collection(db, 'artifacts', appId, 'public', 'data', 'articles'), orderBy('timestamp', 'desc'));
-                        try {
-                            const snap = await getDocs(q);
-                            cloudArticles = snap.docs.map(doc => doc.data());
-                            render();
-                        } catch (err) {
-                            console.error("Content fetch failed:", err);
-                            render(); // Fallback to foundation
-                        }
-                    }
-                });
-            } catch (err) {
-                console.error("Firebase init failed:", err);
-                render();
-            }
-        };
-
-        // NEWSLETTER SUBMISSION
-        document.getElementById('newsletterForm').onsubmit = async (e) => {
-            e.preventDefault();
-            if (!currentUser) {
-                showToast("Connecting to secure server...");
-                return;
-            }
-            const email = document.getElementById('newsletterEmail').value;
-            const btn = document.getElementById('newsletterBtn');
-            btn.disabled = true; btn.textContent = "Joining...";
-
-            try {
-                // RULE 1 - Strict Path
-                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'subscribers'), {
-                    email: email,
-                    timestamp: serverTimestamp()
-                });
-                showToast("Success! Welcome to the Gain Circle.");
-                document.getElementById('newsletterEmail').value = '';
-            } catch (err) {
-                showToast("Service temporarily unavailable.");
-            } finally {
-                btn.disabled = false; btn.textContent = "Join Circle";
-            }
-        };
-
-        // CALCULATOR
         window.calculate = () => {
             const age = parseInt(document.getElementById('age').value);
             const rAge = parseInt(document.getElementById('retireAge').value);
             const v = parseFloat(document.getElementById('vigor').value);
-            if (!age || !rAge) return;
-            const years = Math.max(0, rAge - age);
-            const res = 165000 * Math.pow(1.04, years) * v;
-            document.getElementById('calcRes').classList.remove('hidden');
-            document.getElementById('resValue').textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(res);
+            const res = 165000 * Math.pow(1.04, Math.max(0, rAge - age)) * v;
+            const resDiv = document.getElementById('calcRes');
+            resDiv.classList.remove('hidden');
+            resDiv.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(res);
         };
 
-        startApp();
+        // Newsletter
+        document.getElementById('newsletterForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('newsletterBtn');
+            const email = document.getElementById('newsletterEmail').value;
+            btn.disabled = true; btn.textContent = "...";
+            try {
+                await signInAnonymously(auth);
+                // Matches guide rule: artifacts/gainmaker-v1/public/data/subscribers
+                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'subscribers'), { 
+                    email, 
+                    timestamp: serverTimestamp() 
+                });
+                const toast = document.getElementById('toast');
+                toast.textContent = "Success!";
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
+            } catch (err) { alert("Error: Check your Firebase Config and Security Rules."); console.error(err); }
+            btn.disabled = false; btn.textContent = "Join";
+        };
+
+        window.render();
     </script>
 </body>
 </html>
-
