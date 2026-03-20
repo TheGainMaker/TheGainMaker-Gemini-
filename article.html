@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article | TheGainMaker</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #ffffff; color: #1e293b; }
+        .article-content h2 { font-size: 1.875rem; font-weight: 800; margin-top: 2.5rem; margin-bottom: 1.25rem; color: #0f172a; }
+        .article-content p { margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.125rem; color: #475569; }
+        .glass-nav { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid #e2e8f0; position: fixed; top: 0; width: 100%; z-index: 100; }
+    </style>
+</head>
+<body>
+
+    <nav class="glass-nav h-20 flex items-center">
+        <div class="max-w-4xl mx-auto px-4 w-full flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-arrow-left text-white text-xs"></i>
+                </div>
+                <span class="font-800 text-slate-900 uppercase italic">Back to Library</span>
+            </a>
+        </div>
+    </nav>
+
+    <article class="pt-32 pb-24 px-4 max-w-3xl mx-auto">
+        <div id="loading" class="text-center py-20 text-slate-400 font-bold uppercase tracking-widest">
+            Fetching Protocol...
+        </div>
+
+        <div id="article-body" class="hidden">
+            <div id="category" class="text-blue-600 font-bold uppercase tracking-widest text-sm mb-4"></div>
+            <h1 id="title" class="text-4xl md:text-6xl font-800 text-slate-900 mb-8 leading-tight tracking-tighter"></h1>
+            <div id="hero-image" class="aspect-[16/9] rounded-[40px] overflow-hidden mb-12 bg-slate-100">
+                <img src="" class="w-full h-full object-cover" id="main-img">
+            </div>
+            <div class="article-content" id="content-text">
+                </div>
+        </div>
+    </article>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // --- USE THE SAME CONFIG FROM YOUR INDEX.HTML ---
+        const firebaseConfig = {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "thegainmaker-db.firebaseapp.com",
+            projectId: "thegainmaker-db",
+            storageBucket: "thegainmaker-db.appspot.com",
+            messagingSenderId: "...",
+            appId: "..."
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function loadArticle() {
+            const params = new URLSearchParams(window.location.search);
+            const articleId = params.get('id');
+
+            if (!articleId) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Path matches your Firestore structure: artifacts/gainmaker-v1/public/data/articles/ID
+            const docRef = doc(db, "artifacts", "gainmaker-v1", "public", "data", "articles", articleId);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('article-body').classList.remove('hidden');
+                
+                document.getElementById('title').textContent = data.title;
+                document.getElementById('category').textContent = data.cat;
+                document.getElementById('main-img').src = data.img;
+                document.getElementById('content-text').innerHTML = data.content;
+                document.title = `${data.title} | TheGainMaker`;
+            } else {
+                document.getElementById('loading').textContent = "Protocol Not Found.";
+            }
+        }
+
+        loadArticle();
+    </script>
+</body>
+</html>
+
+Phase 2: Update your index.html links
+For your homepage cards to actually "open" these articles, you need to update the link in your render() function.
+Find the part in your index.html script where the card HTML is generated and change the <a> tag to this:
+// Change the link to use the document ID from Firebase
+<a href="article.html?id=${item.id}" class="inline-flex items-center text-blue-600 font-bold text-xs uppercase tracking-widest group">
+    View Protocol <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+</a>
+
