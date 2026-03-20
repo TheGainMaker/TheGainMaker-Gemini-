@@ -13,21 +13,20 @@
         .accent-gradient { background: linear-gradient(135deg, #2563eb 0%, #10b981 100%); }
         .text-gradient { background: linear-gradient(135deg, #1e40af 0%, #059669 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .tab-active { color: #2563eb; border-bottom: 3px solid #2563eb; }
-        .gain-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .gain-card:hover { transform: translateY(-6px); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); }
-        .image-fallback { display: flex; align-items: center; justify-content: center; background: #f1f5f9; color: #64748b; font-weight: 700; text-align: center; padding: 20px; text-transform: uppercase; font-size: 0.75rem; }
+        .gain-card { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid #f1f5f9; }
+        .gain-card:hover { transform: translateY(-8px); box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.08); border-color: #e2e8f0; }
         #toast { visibility: hidden; min-width: 250px; background-color: #0f172a; color: #fff; text-align: center; border-radius: 50px; padding: 14px; position: fixed; z-index: 200; left: 50%; bottom: 30px; transform: translateX(-50%); font-weight: 600; opacity: 0; transition: 0.3s; }
         #toast.show { visibility: visible; opacity: 1; bottom: 40px; }
     </style>
 </head>
 <body class="text-slate-800">
 
-    <div id="toast">Action Successful</div>
+    <div id="toast">Protocol Joined</div>
 
     <nav class="glass-nav h-20 flex items-center">
         <div class="max-w-7xl mx-auto px-4 w-full flex justify-between items-center">
             <div class="flex items-center space-x-2 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
-                <div class="w-10 h-10 accent-gradient rounded-xl flex items-center justify-center shadow-lg">
+                <div class="w-10 h-10 accent-gradient rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/20">
                     <i class="fas fa-chart-line text-white text-lg"></i>
                 </div>
                 <span class="text-xl font-800 tracking-tighter text-slate-900 uppercase italic">THE<span class="text-blue-600">GAIN</span>MAKER</span>
@@ -36,17 +35,19 @@
                 <a href="#content-hub" onclick="setActiveTab('health')" class="hover:text-blue-600">Health</a>
                 <a href="#content-hub" onclick="setActiveTab('money')" class="hover:text-blue-600">Money</a>
                 <a href="#content-hub" onclick="setActiveTab('books')" class="hover:text-blue-600">Books</a>
-                <a href="#calculator" class="px-5 py-2.5 bg-slate-900 text-white rounded-full hover:bg-blue-600 transition">Calculator</a>
+                <a href="#calculator" class="px-5 py-2.5 bg-slate-900 text-white rounded-full hover:bg-blue-600 transition shadow-md">Calculator</a>
             </div>
         </div>
     </nav>
 
     <header class="relative pt-48 pb-24 px-4 text-center bg-white border-b border-slate-50">
-        <h1 class="text-5xl md:text-7xl font-800 text-slate-900 mb-8 leading-[1.1]">Optimize <span class="text-gradient">Biology</span>.<br>Scale <span class="text-gradient">Wealth</span>.</h1>
-        <p class="text-lg text-slate-500 mb-10 max-w-2xl mx-auto leading-relaxed">Research-backed systems for high-performers. Manage your health like an investment and your wealth like a science.</p>
+        <h1 class="text-5xl md:text-7xl font-800 text-slate-900 mb-8 leading-[1.1] tracking-tight">
+            Optimize Your <span class="text-gradient">Biology</span>.<br>Scale Your <span class="text-gradient">Wealth</span>.
+        </h1>
+        <p class="text-lg text-slate-500 mb-12 max-w-2xl mx-auto leading-relaxed">The high-performance protocol for Yardley's elite. Manage health like capital and wealth like science.</p>
         <div class="flex justify-center gap-4">
             <a href="#content-hub" class="px-10 py-4 bg-slate-900 text-white font-bold rounded-2xl shadow-xl hover:-translate-y-1 transition">View Library</a>
-            <a href="#newsletter" class="px-10 py-4 border border-slate-200 font-bold rounded-2xl">Join Newsletter</a>
+            <a href="#newsletter" class="px-10 py-4 border border-slate-200 font-bold rounded-2xl hover:bg-slate-50 transition">Join Newsletter</a>
         </div>
     </header>
 
@@ -59,28 +60,28 @@
                     <button onclick="setActiveTab('books')" id="tab-books" class="pb-4 text-sm font-bold uppercase tracking-widest transition text-slate-400">Books</button>
                 </div>
             </div>
-            <div id="content-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
+            <div id="content-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Articles load here -->
+            </div>
         </div>
     </section>
 
     <section id="calculator" class="py-32 bg-slate-900 text-white">
         <div class="max-w-4xl mx-auto px-4 grid md:grid-cols-2 gap-16 items-center">
             <div>
-                <h2 class="text-4xl font-800 mb-6">Gain Health.<br><span class="text-blue-400">Protect Capital.</span></h2>
-                <p class="text-slate-400 leading-relaxed">Healthcare is the single largest expense in retirement. Estimate your needs and fund your longevity reserve.</p>
+                <h2 class="text-4xl font-800 mb-6 leading-tight">Protect Your <br><span class="text-blue-400">Capital Reserve.</span></h2>
+                <p class="text-slate-400">Healthcare is the largest variable in retirement. Calculate your bio-risk adjustment today.</p>
             </div>
             <div class="bg-white/5 p-10 rounded-[40px] border border-white/10 text-left">
                 <div class="space-y-4">
                     <label class="block text-xs font-bold text-slate-400 uppercase ml-1">Current Age</label>
                     <input type="number" id="age" value="35" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white outline-none">
-                    <label class="block text-xs font-bold text-slate-400 uppercase ml-1">Retirement Age</label>
-                    <input type="number" id="retireAge" value="65" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white outline-none">
-                    <label class="block text-xs font-bold text-slate-400 uppercase ml-1">Health Profile</label>
+                    <label class="block text-xs font-bold text-slate-400 uppercase ml-1">Vigor Rating</label>
                     <select id="vigor" class="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-white outline-none">
-                        <option value="1.0" class="bg-slate-800">Elite / Biohacker</option>
+                        <option value="1.0" class="bg-slate-800">Elite</option>
                         <option value="1.3" selected class="bg-slate-800">Standard</option>
                     </select>
-                    <button onclick="calculate()" class="w-full py-5 bg-blue-600 rounded-2xl font-bold mt-4">Calculate Reserve</button>
+                    <button onclick="calculate()" class="w-full py-5 bg-blue-600 rounded-2xl font-bold mt-4 shadow-lg shadow-blue-600/20">Calculate</button>
                     <div id="calcRes" class="hidden text-center pt-8 border-t border-white/10 mt-6 font-800 text-4xl text-blue-400">$0</div>
                 </div>
             </div>
@@ -88,9 +89,9 @@
     </section>
 
     <section id="newsletter" class="py-32 bg-white text-center px-4">
-        <h2 class="text-3xl font-800 mb-4">The Weekly Gain</h2>
+        <h2 class="text-3xl font-800 mb-4 tracking-tight">The Weekly Signal</h2>
         <form id="newsletterForm" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
-            <input type="email" id="newsletterEmail" required placeholder="Enter email" class="flex-1 px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none">
+            <input type="email" id="newsletterEmail" required placeholder="Enter email" class="flex-1 px-6 py-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:border-blue-600">
             <button type="submit" id="newsletterBtn" class="px-10 py-4 bg-slate-900 text-white font-bold rounded-2xl hover:bg-blue-600 transition">Join</button>
         </form>
     </section>
@@ -104,54 +105,54 @@
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // --- PASTE YOUR FIREBASE CONFIG BELOW ---
+        // --- PASTE YOUR CONFIG HERE ---
         const firebaseConfig = {
-            apiKey: AIzaSyD3cBpc06Gw9ydt20jBS3ZKRZjlnAw2gTk,
+            apiKey: "AlzaSyD3cBpc06Gw9ydt20jBS3ZKRZjInAw2gTk",
             authDomain: "thegainmaker-db.firebaseapp.com",
             projectId: "thegainmaker-db",
             storageBucket: "thegainmaker-db.appspot.com",
-            messagingSenderId: "...",
-            appId: "..."
+            messagingSenderId: "367305904675",
+            appId: "1:367305904675:web:8666572e008c3584988448"
         };
-        // --- END OF CONFIG ---
 
-        const appId = "gainmaker-v1";
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Updated Library with unique IDs
         const library = [
+            // HEALTH
             { id: 'zone-2', cat: 'health', title: 'Zone 2 Protocol', desc: 'Low-intensity cardio for cellular longevity.', img: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&q=80&w=600' },
-            { id: 'sleep', cat: 'health', title: 'Sleep Hygiene Mastery', desc: 'Reach 90%+ sleep efficiency.', img: 'https://images.unsplash.com/photo-1541480601022-2308c0f02487?auto=format&fit=crop&q=80&w=600' },
-            { id: 'vo2max', cat: 'health', title: 'The VO2 Max Lever', desc: 'Predicting lifespan through aerobic capacity.', img: 'https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&q=80&w=600' },
+            { id: 'sleep', cat: 'health', title: 'Sleep Hygiene', desc: 'Protocol for 90%+ sleep efficiency.', img: 'https://images.unsplash.com/photo-1541480601022-2308c0f02487?auto=format&fit=crop&q=80&w=600' },
+            { id: 'vo2max', cat: 'health', title: 'VO2 Max Lever', desc: 'Predicting lifespan through aerobic capacity.', img: 'https://images.unsplash.com/photo-1483721310020-03333e577078?auto=format&fit=crop&q=80&w=600' },
             { id: 'microbiome', cat: 'health', title: 'Microbiome Logic', desc: 'Gut-first approach to mental clarity.', img: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=600' },
-            { id: 'cold', cat: 'health', title: 'Cold Exposure Logic', desc: 'Brown fat activation and dopamine resets.', img: 'https://images.unsplash.com/photo-1517344834466-7f05d27b3338?auto=format&fit=crop&q=80&w=600' },
-            { id: 'hydration', cat: 'health', title: 'Hydration Precision', desc: 'Essential magnesium and sodium balance.', img: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&q=80&w=600' },
-            { id: 'circadian', cat: 'health', title: 'Circadian Shielding', desc: 'Protecting your biological clock.', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=600' },
-            { id: 'resistance', cat: 'health', title: 'Resistance Fundamentals', desc: 'Skeletal muscle as a longevity organ.', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=600' },
-            { id: 'autophagy', cat: 'health', title: 'Autophagy Protocols', desc: 'Cellular cleanup and insulin resets.', img: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&q=80&w=600' },
-            { id: 'mobility', cat: 'health', title: 'Mobility as Currency', desc: 'Maintaining range of motion with age.', img: 'https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&q=80&w=600' },
-            { id: 'index', cat: 'money', title: 'Index Fund Efficiency', desc: 'The tax-advantaged path to $5M.', img: 'https://images.unsplash.com/photo-1611974714024-460777dc5941?auto=format&fit=crop&q=80&w=600' },
-            { id: 'hsa', cat: 'money', title: 'HSA: The Hidden Asset', desc: 'Health accounts as retirement tools.', img: 'https://images.unsplash.com/photo-1573164773711-331694d765d4?auto=format&fit=crop&q=80&w=600' },
-            { id: 'tokens', cat: 'money', title: 'Asset Tokenization', desc: 'Fractional real estate for individuals.', img: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=600' },
-            { id: 'bitcoin', cat: 'money', title: 'Bitcoin Strategy', desc: 'Risk-mitigated sovereign wealth.', img: 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&q=80&w=600' },
-            { id: 'scale', cat: 'money', title: 'Systems of Scale', desc: 'Building digital assets that operate solo.', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600' },
-            { id: 'tax-loss', cat: 'money', title: 'Tax Loss Harvesting', desc: 'Turn volatility into tax credits.', img: 'https://images.unsplash.com/photo-1554224155-1696413565d3?auto=format&fit=crop&q=80&w=600' },
-            { id: 'hyl', cat: 'money', title: 'High-Yield Ladder', desc: 'Optimizing cash flow in a 5% world.', img: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&q=80&w=600' },
-            { id: 'withdrawal', cat: 'money', title: 'Withdrawal Realities', desc: 'Navigating the 4% rule against inflation.', img: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=600' },
-            { id: 'vc', cat: 'money', title: 'Venture Fundamentals', desc: 'Angel investing for creators.', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600' },
-            { id: 'arbitrage', cat: 'money', title: 'Global Arbitrage', desc: 'Offshore structures for tax optimization.', img: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=600' },
-            { id: 'deep-work', cat: 'books', title: 'Deep Work', desc: 'Cal Newport - Focus in a noisy world.', img: 'https://covers.openlibrary.org/b/isbn/9781455586691-L.jpg' },
-            { id: 'atomic-habits', cat: 'books', title: 'Atomic Habits', desc: 'James Clear - 1% improvement protocol.', img: 'https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg' },
-            { id: 'psych-money', cat: 'books', title: 'Psychology of Money', desc: 'Morgan Housel - Wealth logic lessons.', img: 'https://covers.openlibrary.org/b/isbn/9780857197689-L.jpg' },
-            { id: 'meditations', cat: 'books', title: 'Meditations', desc: 'Marcus Aurelius - Stoic resilience protocol.', img: 'https://covers.openlibrary.org/b/isbn/9780812968255-L.jpg' },
-            { id: 'skin-game', cat: 'books', title: 'Skin in the Game', desc: 'Nassim Taleb - Hidden asymmetries.', img: 'https://covers.openlibrary.org/b/isbn/9780425284643-L.jpg' },
-            { id: 'zero-one', cat: 'books', title: 'Zero to One', desc: 'Peter Thiel - Building the future.', img: 'https://covers.openlibrary.org/b/isbn/9780804139298-L.jpg' },
-            { id: 'outlive', cat: 'books', title: 'Outlive', desc: 'Peter Attia - The science of longevity.', img: 'https://covers.openlibrary.org/b/isbn/9780593236598-L.jpg' },
-            { id: 'alchemist', cat: 'books', title: 'The Alchemist', desc: 'Paulo Coelho - Finding your legend.', img: 'https://covers.openlibrary.org/b/isbn/9780062315007-L.jpg' },
+            { id: 'cold', cat: 'health', title: 'Cold Exposure', desc: 'Dopamine resets and brown fat activation.', img: 'https://images.unsplash.com/photo-1517344834466-7f05d27b3338?auto=format&fit=crop&q=80&w=600' },
+            { id: 'hydration', cat: 'health', title: 'Hydration Precision', desc: 'Essential magnesium and salt protocols.', img: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&q=80&w=600' },
+            { id: 'circadian', cat: 'health', title: 'Circadian Shield', desc: 'Mastering the biological clock.', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&q=80&w=600' },
+            { id: 'resistance', cat: 'health', title: 'Strength Organ', desc: 'Skeletal muscle as metabolic armor.', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=600' },
+            { id: 'autophagy', cat: 'health', title: 'Autophagy Protocols', desc: 'Cellular recycling and insulin resets.', img: 'https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&q=80&w=600' },
+            { id: 'mobility', cat: 'health', title: 'Joint Currency', desc: 'Range of motion as you age.', img: 'https://images.unsplash.com/photo-1518310383802-640c2de311b2?auto=format&fit=crop&q=80&w=600' },
+            // MONEY
+            { id: 'index', cat: 'money', title: 'Index Efficiency', desc: 'The tax-advantaged path to $5M.', img: 'https://images.unsplash.com/photo-1611974714024-460777dc5941?auto=format&fit=crop&q=80&w=600' },
+            { id: 'hsa', cat: 'money', title: 'HSA: The Triple Play', desc: 'Health savings as retirement tools.', img: 'https://images.unsplash.com/photo-1573164773711-331694d765d4?auto=format&fit=crop&q=80&w=600' },
+            { id: 'tokens', cat: 'money', title: 'Tokenized Equity', desc: 'Fractional assets for solo investors.', img: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&q=80&w=600' },
+            { id: 'bitcoin', cat: 'money', title: 'Digital Scarcity', desc: 'Risk-managed sovereign wealth.', img: 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?auto=format&fit=crop&q=80&w=600' },
+            { id: 'scale', cat: 'money', title: 'Systems of Scale', desc: 'Digital assets that operate 24/7.', img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=600' },
+            { id: 'harvest', cat: 'money', title: 'Tax Loss Secrets', desc: 'Turn volatility into tax credits.', img: 'https://images.unsplash.com/photo-1554224155-1696413565d3?auto=format&fit=crop&q=80&w=600' },
+            { id: 'yield', cat: 'money', title: 'The Yield Ladder', desc: 'Optimizing cash in high-interest worlds.', img: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?auto=format&fit=crop&q=80&w=600' },
+            { id: 'fire', cat: 'money', title: 'Withdrawal Reality', desc: 'Navigating the 4% rule today.', img: 'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80&w=600' },
+            { id: 'venture', cat: 'money', title: 'Angel Fundamentals', desc: 'Asymmetric returns for creators.', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=600' },
+            { id: 'arbitrage', cat: 'money', title: 'Global Arbitrage', desc: 'Offshore logic for US citizens.', img: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=600' },
+            // BOOKS
+            { id: 'deep-work', cat: 'books', title: 'Deep Work', desc: 'Cal Newport - Focus logic.', img: 'https://covers.openlibrary.org/b/isbn/9781455586691-L.jpg' },
+            { id: 'atomic-habits', cat: 'books', title: 'Atomic Habits', desc: 'James Clear - 1% protocol.', img: 'https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg' },
+            { id: 'psych-money', cat: 'books', title: 'Psych of Money', desc: 'Morgan Housel - Wealth logic.', img: 'https://covers.openlibrary.org/b/isbn/9780857197689-L.jpg' },
+            { id: 'meditations', cat: 'books', title: 'Meditations', desc: 'Marcus Aurelius - Stoic armor.', img: 'https://covers.openlibrary.org/b/isbn/9780812968255-L.jpg' },
+            { id: 'skin-game', cat: 'books', title: 'Skin in the Game', desc: 'Nassim Taleb - Asymmetry.', img: 'https://covers.openlibrary.org/b/isbn/9780425284643-L.jpg' },
+            { id: 'zero-one', cat: 'books', title: 'Zero to One', desc: 'Peter Thiel - Build the future.', img: 'https://covers.openlibrary.org/b/isbn/9780804139298-L.jpg' },
+            { id: 'outlive', cat: 'books', title: 'Outlive', desc: 'Peter Attia - Science of longevity.', img: 'https://covers.openlibrary.org/b/isbn/9780593236598-L.jpg' },
+            { id: 'alchemist', cat: 'books', title: 'The Alchemist', desc: 'Paulo Coelho - Finding legends.', img: 'https://covers.openlibrary.org/b/isbn/9780062315007-L.jpg' },
             { id: 'titans', cat: 'books', title: 'Tools of Titans', desc: 'Tim Ferriss - Tactics of giants.', img: 'https://covers.openlibrary.org/b/isbn/9781328683045-L.jpg' },
-            { id: 'meaning', cat: 'books', title: 'Search for Meaning', desc: 'Viktor Frankl - Purpose in any state.', img: 'https://covers.openlibrary.org/b/isbn/9780807014295-L.jpg' }
+            { id: 'meaning', cat: 'books', title: 'Search for Meaning', desc: 'Viktor Frankl - Purpose Mastery.', img: 'https://covers.openlibrary.org/b/isbn/9780807014295-L.jpg' }
         ];
 
         let activeTab = 'health';
@@ -163,13 +164,12 @@
             const filtered = library.filter(i => i.cat === activeTab);
             filtered.forEach(item => {
                 const card = document.createElement('div');
-                card.className = "bg-white rounded-[40px] p-5 border border-slate-100 gain-card card-shadow text-left";
+                card.className = "bg-white rounded-[40px] p-5 gain-card text-left";
                 const isBooks = activeTab === 'books';
-                
-                // --- THE UPDATED LINK IS HERE ---
                 card.innerHTML = `
-                    <div class="${isBooks ? 'aspect-[2/3]' : 'aspect-[16/10]'} rounded-[28px] overflow-hidden bg-slate-50 border border-slate-50 mb-8 flex items-center justify-center">
-                        <img src="${item.img}" class="w-full h-full ${isBooks ? 'object-contain p-2' : 'object-cover'}" onerror="handleImgError(this, '${item.title.replace(/'/g, "\\'")}')">
+                    <div class="${isBooks ? 'aspect-[2/3]' : 'aspect-[16/10]'} rounded-[28px] overflow-hidden bg-slate-50 border border-slate-50 mb-8">
+                        <img src="${item.img}" class="w-full h-full ${isBooks ? 'object-contain p-2' : 'object-cover'}" 
+                             onerror="this.src='https://via.placeholder.com/400x600?text=Protocol+Loading'">
                     </div>
                     <h3 class="text-xl font-800 mb-2 leading-tight">${item.title}</h3>
                     <p class="text-slate-500 text-sm mb-8 leading-relaxed">${item.desc}</p>
@@ -179,15 +179,6 @@
                 `;
                 grid.appendChild(card);
             });
-        };
-
-        window.handleImgError = (img, title) => {
-            const parent = img.parentElement;
-            img.style.display = 'none';
-            const fallback = document.createElement('div');
-            fallback.className = 'w-full h-full image-fallback';
-            fallback.innerText = title;
-            parent.appendChild(fallback);
         };
 
         window.setActiveTab = (t) => {
@@ -201,9 +192,8 @@
 
         window.calculate = () => {
             const age = parseInt(document.getElementById('age').value);
-            const rAge = parseInt(document.getElementById('retireAge').value);
             const v = parseFloat(document.getElementById('vigor').value);
-            const res = 165000 * Math.pow(1.04, Math.max(0, rAge - age)) * v;
+            const res = 165000 * Math.pow(1.04, Math.max(0, 65 - age)) * v;
             const resDiv = document.getElementById('calcRes');
             resDiv.classList.remove('hidden');
             resDiv.textContent = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(res);
@@ -216,15 +206,11 @@
             btn.disabled = true; btn.textContent = "...";
             try {
                 await signInAnonymously(auth);
-                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'subscribers'), { 
-                    email, 
-                    timestamp: serverTimestamp() 
-                });
+                await addDoc(collection(db, 'artifacts', 'gainmaker-v1', 'public', 'data', 'subscribers'), { email, timestamp: serverTimestamp() });
                 const toast = document.getElementById('toast');
-                toast.textContent = "Success!";
                 toast.classList.add('show');
                 setTimeout(() => toast.classList.remove('show'), 3000);
-            } catch (err) { alert("Error: Check your Firebase Config and Security Rules."); console.error(err); }
+            } catch (err) { alert("Check Rules & Auth!"); }
             btn.disabled = false; btn.textContent = "Join";
         };
 
